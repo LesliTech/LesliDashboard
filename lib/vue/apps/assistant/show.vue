@@ -1,7 +1,9 @@
 <script setup>
 
-
 import { ref, onMounted } from "vue";
+import { useLayout } from "Lesli/vue/shared/stores/layout.js"
+
+const storeLayout = useLayout()
 
 const lesli = Lesli;
 const hour = new Date().getHours();
@@ -19,7 +21,6 @@ onMounted(()=>{
     } else {
         welcomeText.value = welcomeTypes[2]
     }
-    //_lesli.value = lesli
 })
 
 </script>
@@ -27,10 +28,9 @@ onMounted(()=>{
     <lesli-application-container>
         <section class="lesli-element-header is-flex mt-6">
             <div class="lesli-element-header-title">
-                <p class="mb-2">{{ dayjs().format("dddd, MMMM D") }}.</p>
-                <h1 class="subtitle is-3">{{welcomeText}}, {{ lesli.current_user?.name }}</h1>
+                <h1 class="subtitle is-3 mb-0">{{welcomeText}}, {{ lesli.current_user?.name }}</h1>
+                <p class="">{{ dayjs().format("dddd, MMMM D") }}.</p>
             </div>
         </section>
-        
     </lesli-application-container>
 </template>
