@@ -31,20 +31,20 @@ Building a better future, one line of code at a time.
 =end
 
 module LesliDashboard
-    class Engine < ::Rails::Engine
-        isolate_namespace LesliDashboard
+    class Dashboard::Component < ApplicationRecord
 
-        initializer :lesli_admin do |app|
+        belongs_to :dashboard, inverse_of: :components
 
-            # register assets manifest
-            config.assets.precompile += %w[lesli_dashboard_manifest.js]
-
-            # register engine migrations path
-            unless app.root.to_s.match root.to_s
-                config.paths["db/migrate"].expanded.each do |expanded_path|
-                    app.config.paths["db/migrate"] << expanded_path
-                end
-            end
+        def self.component_ids
+            ["version"]
         end
+        # components_ids: {
+        #     list_new_tickets: "list_new_tickets",
+        #     list_my_tickets: "list_my_tickets",
+        #     list_unassigned_tickets: "list_unassigned_tickets",
+        #     chart_tickets_by_type: "chart_tickets_by_type",
+        #     chart_tickets_by_category: "chart_tickets_by_category",
+        #     hours_worked: "hours_worked"
+        # }
     end
 end

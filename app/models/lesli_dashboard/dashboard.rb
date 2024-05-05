@@ -31,20 +31,28 @@ Building a better future, one line of code at a time.
 =end
 
 module LesliDashboard
-    class Engine < ::Rails::Engine
-        isolate_namespace LesliDashboard
+    class Dashboard < Lesli::Shared::Dashboard
+        self.table_name = "lesli_dashboard_dashboards"
+        belongs_to :account
 
-        initializer :lesli_admin do |app|
+        has_many :components, inverse_of: :dashboard, autosave: true, dependent: :destroy
+        accepts_nested_attributes_for :components, allow_destroy: true
 
-            # register assets manifest
-            config.assets.precompile += %w[lesli_dashboard_manifest.js]
-
-            # register engine migrations path
-            unless app.root.to_s.match root.to_s
-                config.paths["db/migrate"].expanded.each do |expanded_path|
-                    app.config.paths["db/migrate"] << expanded_path
-                end
-            end
+        def self.initialize_account(account)
+            self.create_with(
+                default: true,
+                main: false,
+                components_attributes: [{
+                    name: "Lesli version",
+                    component_id: "admin-lesli-version",
+                    layout: 3,
+                    query_configuration: {},
+                    custom_configuration: {}
+                }]
+            ).find_or_create_by!(
+                account: account,
+                name: "Admin Default Dashboard"
+            )
         end
     end
 end

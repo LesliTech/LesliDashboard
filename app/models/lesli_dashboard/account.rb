@@ -23,7 +23,7 @@ Made with ♥ by https://www.lesli.tech
 Building a better future, one line of code at a time.
 
 @contact  hello@lesli.tech
-@website  https://www.lesli.tech
+@website  https://www.lesli.dev
 @license  GPLv3 http://www.gnu.org/licenses/gpl-3.0.en.html
 
 // · ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~
@@ -31,20 +31,14 @@ Building a better future, one line of code at a time.
 =end
 
 module LesliDashboard
-    class Engine < ::Rails::Engine
-        isolate_namespace LesliDashboard
+    class Account < ApplicationRecord
+        belongs_to :account, class_name: "Lesli::Account"
+        has_many :users, class_name: "Lesli::User"
 
-        initializer :lesli_admin do |app|
+        after_create :initialize_account
 
-            # register assets manifest
-            config.assets.precompile += %w[lesli_dashboard_manifest.js]
-
-            # register engine migrations path
-            unless app.root.to_s.match root.to_s
-                config.paths["db/migrate"].expanded.each do |expanded_path|
-                    app.config.paths["db/migrate"] << expanded_path
-                end
-            end
+        def initialize_account
+            Dashboard.initialize_account(self)
         end
     end
 end

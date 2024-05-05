@@ -31,5 +31,17 @@ Building a better future, one line of code at a time.
 =end
 
 LesliDashboard::Engine.routes.draw do
-    root to: "assistants#show"
+    root to: "dashboards#show"
+
+    # Dashboard management
+    resource :dashboard, only: [:show]
+    resources :dashboards do
+        collection do
+            post "list" => :index
+            get :options
+        end
+        scope module: :dashboard do
+            resources :components
+        end
+    end
 end

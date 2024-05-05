@@ -30,21 +30,24 @@ Building a better future, one line of code at a time.
 // · 
 =end
 
-module LesliDashboard
-    class Engine < ::Rails::Engine
-        isolate_namespace LesliDashboard
-
-        initializer :lesli_admin do |app|
-
-            # register assets manifest
-            config.assets.precompile += %w[lesli_dashboard_manifest.js]
-
-            # register engine migrations path
-            unless app.root.to_s.match root.to_s
-                config.paths["db/migrate"].expanded.each do |expanded_path|
-                    app.config.paths["db/migrate"] << expanded_path
-                end
+class CreateLesliDashboardDashboardComponents < ActiveRecord::Migration[6.1]
+    def change
+        gem_path = Lesli::System.engine("Lesli", "dir")
+        table_base_structure = JSON.parse(File.read(File.join(gem_path, "db", "structure", "00000502_dashboard_components.json")))
+        create_table :lesli_dashboard_dashboard_components do |t|
+            table_base_structure.each do |column|
+                t.send(
+                    column["type"].parameterize.underscore.to_sym,
+                    column["name"].parameterize.underscore.to_sym
+                )
             end
+            t.timestamps
         end
+
+        add_reference(
+            :lesli_dashboard_dashboard_components, :dashboard, 
+            foreign_key: { to_table: :lesli_dashboard_dashboards }, 
+            index: { name: "lesli_dashboard_dashboard_components_dashboards" }
+        )
     end
 end

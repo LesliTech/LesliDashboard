@@ -30,21 +30,13 @@ Building a better future, one line of code at a time.
 // · 
 =end
 
-module LesliDashboard
-    class Engine < ::Rails::Engine
-        isolate_namespace LesliDashboard
-
-        initializer :lesli_admin do |app|
-
-            # register assets manifest
-            config.assets.precompile += %w[lesli_dashboard_manifest.js]
-
-            # register engine migrations path
-            unless app.root.to_s.match root.to_s
-                config.paths["db/migrate"].expanded.each do |expanded_path|
-                    app.config.paths["db/migrate"] << expanded_path
-                end
-            end
+class CreateLesliDashboardAccounts < ActiveRecord::Migration[6.0]
+    def change
+        create_table :lesli_dashboard_accounts do |t|
+            t.integer   :status
+            t.datetime  :deleted_at, index: true
+            t.timestamps 
         end
+        add_reference(:lesli_dashboard_accounts, :account, foreign_key: { to_table: :lesli_accounts })
     end
 end
