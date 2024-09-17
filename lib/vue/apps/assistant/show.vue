@@ -28,7 +28,7 @@ onMounted(()=>{
     <lesli-application-container>
         <section class="lesli-element-header is-flex mt-6">
             <div class="lesli-element-header-title">
-                <h1 class="subtitle is-3 mb-0">{{welcomeText}}, {{ lesli.current_user?.name }}</h1>
+                <h1 class="subtitle is-size-3 mb-0">{{welcomeText}}, {{ lesli.current_user?.name }}</h1>
                 <p class="">{{ dayjs().format("dddd, MMMM D") }}.</p>
             </div>
         </section>
