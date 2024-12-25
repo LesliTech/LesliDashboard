@@ -30,20 +30,21 @@ Building a better future, one line of code at a time.
 // · 
 =end
 
-LesliDashboard::Engine.routes.draw do
-    root to: "dashboards#show"
 
-    # Dashboard management
-    resource :dashboard, only: [:show]
-    resources :dashboards do
-        collection do
-            post "list" => :index
-            get :options
-        end
-        scope module: :dashboard do
-            resources :components
-        end
+# ·
+require "rails_helper"
+require Lesli::Engine.root.join("lib/rspec/testers/request")
+
+# ·
+RSpec.describe ::Rails::HealthController, type: :request do
+
+    include_context "request user authentication"
+
+    it "test health rails controller" do
+
+        get("#{LESLI_DASHBOARD_ENGINE_MOUNTED_PATH}/up")
+
+        expect(response).to have_http_status(:success)
+        expect(response.content_type).to eq("text/html; charset=utf-8")
     end
-
-    get "up" => "/rails/health#show"
 end
