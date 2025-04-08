@@ -38,7 +38,7 @@ module LesliDashboard
         after_create :initialize_account
 
         def initialize_account
-            Dashboard.initialize_account(self)
+            #Dashboard.initialize_account(self)
         end
     end
 end

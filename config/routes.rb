@@ -31,19 +31,6 @@ Building a better future, one line of code at a time.
 =end
 
 LesliDashboard::Engine.routes.draw do
-    root to: "dashboards#show"
-
-    # Dashboard management
-    resource :dashboard, only: [:show]
-    resources :dashboards do
-        collection do
-            post "list" => :index
-            get :options
-        end
-        scope module: :dashboard do
-            resources :components
-        end
-    end
-
+    Lesli::Routing.mount_dashboard_for(LesliDashboard) 
     get "up" => "/rails/health#show"
 end

@@ -32,22 +32,22 @@ Building a better future, one line of code at a time.
 
 class CreateLesliDashboardDashboardComponents < ActiveRecord::Migration[6.1]
     def change
-        gem_path = Lesli::System.engine("Lesli", "dir")
-        table_base_structure = JSON.parse(File.read(File.join(gem_path, "db", "structure", "00000502_dashboard_components.json")))
-        create_table :lesli_dashboard_dashboard_components do |t|
-            table_base_structure.each do |column|
-                t.send(
-                    column["type"].parameterize.underscore.to_sym,
-                    column["name"].parameterize.underscore.to_sym
-                )
-            end
-            t.timestamps
-        end
+        # gem_path = Lesli::System.engine("Lesli", "dir")
+        # table_base_structure = JSON.parse(File.read(File.join(gem_path, "db", "structure", "00000502_dashboard_components.json")))
+        # create_table :lesli_dashboard_dashboard_components do |t|
+        #     table_base_structure.each do |column|
+        #         t.send(
+        #             column["type"].parameterize.underscore.to_sym,
+        #             column["name"].parameterize.underscore.to_sym
+        #         )
+        #     end
+        #     t.timestamps
+        # end
 
-        add_reference(
-            :lesli_dashboard_dashboard_components, :dashboard, 
-            foreign_key: { to_table: :lesli_dashboard_dashboards }, 
-            index: { name: "lesli_dashboard_dashboard_components_dashboards" }
-        )
+        # add_reference(
+        #     :lesli_dashboard_dashboard_components, :dashboard, 
+        #     foreign_key: { to_table: :lesli_dashboard_dashboards }, 
+        #     index: { name: "lesli_dashboard_dashboard_components_dashboards" }
+        # )
     end
 end

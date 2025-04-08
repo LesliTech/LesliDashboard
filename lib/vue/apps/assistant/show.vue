@@ -32,5 +32,23 @@ onMounted(()=>{
                 <p class="">{{ dayjs().format("dddd, MMMM D") }}.</p>
             </div>
         </section>
+
+        <section class="widgets">
+            <div class="columns is-multiline">
+                <div class="column is-2"><div>2</div></div>
+                <div class="column is-2"><div>2</div></div>
+                <div class="column is-2"><div>2</div></div>
+                <div class="column is-2"><div>2</div></div>
+                <div class="column is-2"><div>2</div></div>
+                <div class="column is-2"><div>2</div></div>
+
+                <div class="column is-4"><div>4</div></div>
+                <div class="column is-4"><div>4</div></div>
+                <div class="column is-4"><div>4</div></div>
+
+                <div class="column is-6"><div>6</div></div>
+                <div class="column is-6"><div>6</div></div>
+            </div>
+        </section>
     </lesli-application-container>
 </template>
