@@ -34,22 +34,5 @@ module LesliDashboard
     class Dashboard < Lesli::Shared::Dashboard
         self.table_name = "lesli_dashboard_dashboards"
         belongs_to :account
-
-        def self.initialize_account(account)
-            # self.create_with(
-            #     default: true,
-            #     main: false,
-            #     components_attributes: [{
-            #         name: "Lesli version",
-            #         component_id: "admin-lesli-version",
-            #         layout: 3,
-            #         query_configuration: {},
-            #         custom_configuration: {}
-            #     }]
-            # ).find_or_create_by!(
-            #     account: account,
-            #     name: "Admin Default Dashboard"
-            # )
-        end
     end
 end

@@ -1,0 +1,73 @@
+<%#
+
+Lesli
+
+Copyright (c) 2023, Lesli Technologies, S. A.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see http://www.gnu.org/licenses/.
+
+Lesli · Ruby on Rails SaaS Development Framework.
+
+Made with ♥ by https://www.lesli.tech
+Building a better future, one line of code at a time.
+
+@contact  hello@lesli.tech
+@website  https://www.lesli.tech
+@license  GPLv3 http://www.gnu.org/licenses/gpl-3.0.en.html
+
+// · ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~
+// · 
+%>
+
+<%
+
+# Returns the hour (0–23) based on the app's timezone
+hour = Date2.new.date.get.hour  
+welcome_options = ["Good morning", "Good afternoon", "Good evening"]
+welcome_text = ""
+
+if hour < 12
+    welcome_text = welcome_options.first
+elsif hour < 18
+    welcome_text = welcome_options.second
+else
+    welcome_text = welcome_options.third
+end
+%>
+
+<% @dashboard ||= { :id=>0, :name=>"", :components=>[] } %>
+
+<%= render(LesliView::Layout::Container.new("dashboards-show", :dashboard => false)) do %>
+
+    <section class="lesli-element-header is-flex mt-6 mb-6 pb-6 container">
+        <div class="lesli-element-header-title">
+            <h1 class="subtitle is-size-3 mb-0">
+                <%= welcome_text %>,
+                <%= current_user.full_name %>
+            </h1>
+            <p class=""><%= Date2.new.date_words_day %>.</p>
+        </div>
+    </section>
+
+    <%= render(LesliView::Elements::Empty.new(text: "Empty dashboard")) if @dashboard[:components].empty? %>
+
+    <div class="columns is-multiline is-variable dashboard-components">
+        <% @dashboard[:components].each do |component| %>
+            <div class="column is-<%= component["size"] %>">
+                <% component_path = "#{controller.controller_path}/component-#{component["component"].gsub('_','-')}"%>
+                <%= render(component_path, { :component => component }) %>
+            </div>
+        <% end %>
+    </div>
+<% end %>
