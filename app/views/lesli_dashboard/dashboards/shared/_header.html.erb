@@ -1,0 +1,26 @@
+
+<%
+
+# Returns the hour (0–23) based on the app's timezone
+hour = Date2.new.date.get.hour  
+welcome_options = ["Good morning", "Good afternoon", "Good evening"]
+welcome_text = ""
+
+if hour < 12
+    welcome_text = welcome_options.first
+elsif hour < 18
+    welcome_text = welcome_options.second
+else
+    welcome_text = welcome_options.third
+end
+%>
+
+<section class="lesli-element-header is-flex mt-6 mb-6 container">
+    <div class="lesli-element-header-title">
+        <h1 class="subtitle is-size-3 mb-0">
+            <%= welcome_text %>,
+            <%= current_user&.full_name %>
+        </h1>
+        <p class=""><%= Date2.new.date_words_day %>.</p>
+    </div>
+</section>
