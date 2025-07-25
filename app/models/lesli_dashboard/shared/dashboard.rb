@@ -10,7 +10,7 @@ module LesliDashboard
 
             COMPONENTS = []
 
-            def self.initialize_dashboard(account)
+            def self.initialize_account(account)
                 engine_name = account.class.name.split("::").first
 
                 dashboard = account.dashboards.find_or_create_by(name: "default")

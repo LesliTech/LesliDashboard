@@ -48,7 +48,7 @@ end
 
 <% @dashboard ||= { :id=>0, :name=>"", :components=>[] } %>
 
-<%= render(LesliView::Layout::Container.new("dashboards-show", :dashboard => true)) do %>
+<%= render(LesliView::Layout::Container.new("dashboards-show", :dashboard => false)) do %>
 
     <%= render("lesli_dashboard/dashboards/shared/header") %>
 

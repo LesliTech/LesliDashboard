@@ -33,12 +33,14 @@ Building a better future, one line of code at a time.
 module LesliDashboard
     class Account < ApplicationRecord
         belongs_to :account, class_name: "Lesli::Account"
+
+        has_many :dashboards
         has_many :users, class_name: "Lesli::User"
 
         after_create :initialize_account
 
         def initialize_account
-            #Dashboard.initialize_account(self)
+            Dashboard.initialize_account(self)
         end
     end
 end
