@@ -54,12 +54,14 @@ end
 
     <%= render(LesliView::Elements::Empty.new(text: "Empty dashboard")) if @dashboard[:components].empty? %>
 
-    <div class="columns is-multiline is-variable dashboard-components">
-        <% @dashboard[:components].each do |component| %>
-            <div class="column is-<%= component["size"] %>">
-                <% component_path = "#{controller.controller_path}/component-#{component["component"].gsub('_','-')}"%>
-                <%= render(component_path, { :component => component }) %>
-            </div>
-        <% end %>
-    </div>
+    <section class="container">
+        <div class="columns is-multiline is-variable dashboard-components">
+            <% @dashboard[:components].each do |component| %>
+                <div class="column is-<%= component["size"] %>">
+                    <% component_path = "#{controller.controller_path}/component-#{component["component"].gsub('_','-')}"%>
+                    <%= render(component_path, { :component => component }) %>
+                </div>
+            <% end %>
+        </div>
+    </section>
 <% end %>
