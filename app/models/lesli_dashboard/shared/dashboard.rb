@@ -11,7 +11,6 @@ module LesliDashboard
             COMPONENTS = []
 
             def self.initialize_account(account)
-                engine_name = account.class.name.split("::").first
 
                 dashboard = account.dashboards.find_or_create_by(name: "default")
                 dashboard.default = true
@@ -23,8 +22,6 @@ module LesliDashboard
                     }
                 end
                 dashboard.save!
-
-                L2.info "#{engine_name} proccesed."
             end
 
             # @return [Hash] Hash of containing the information of the dashboard and its components.
