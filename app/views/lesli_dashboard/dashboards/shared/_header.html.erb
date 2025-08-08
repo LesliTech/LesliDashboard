@@ -18,13 +18,4 @@ end
 <%= render(LesliView::Components::Header.new(
     welcome_text + ', ' + current_user&.full_name,
     Date2.new.date_words_day
-)) do %>
-    <button class="button is-primary is-outlined">
-        <span class="icon ">
-            <span class="material-symbols">
-                refresh
-            </span>
-        </span>
-    </button>
-<% end %>
-<br>
+)) %>
