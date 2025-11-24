@@ -34,5 +34,7 @@ module LesliDashboard
     class Dashboard < Lesli::Shared::Dashboard
         self.table_name = "lesli_dashboard_dashboards"
         belongs_to :account
+
+        COMPONENTS = %i[count chart_bar chart_line]
     end
 end

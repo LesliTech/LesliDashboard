@@ -2,7 +2,7 @@
 
 Lesli
 
-Copyright (c) 2023, Lesli Technologies, S. A.
+Copyright (c) 2025, Lesli Technologies, S. A.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ along with this program. If not, see http://www.gnu.org/licenses/.
 
 Lesli · Ruby on Rails SaaS Development Framework.
 
-Made with ♥ by https://www.lesli.tech
+Made with ♥ by LesliTech
 Building a better future, one line of code at a time.
 
 @contact  hello@lesli.tech
@@ -30,7 +30,9 @@ Building a better future, one line of code at a time.
 // · 
 =end
 
-LesliDashboard::Engine.routes.draw do
-    Lesli::Router.mount_dashboard_for(LesliDashboard) 
-    get "up" => "/rails/health#show"
-end
+L2.msg("LesliSupport", "Version: #{LesliSupport::VERSION}", "Build: #{LesliSupport::BUILD}")
+
+# · load specific environment seeds
+if Rails.env.development? || Lesli.config.demo 
+    load LesliSupport::Engine.root.join("db", "seed", "#{ Rails.env.downcase }.rb")
+end 
