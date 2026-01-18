@@ -32,9 +32,6 @@ Building a better future, one line of code at a time.
 
 module LesliDashboard
     class Dashboard < Lesli::Shared::Dashboard
-        self.table_name = "lesli_dashboard_dashboards"
-        belongs_to :account
-
         COMPONENTS = %i[count chart_bar chart_line date weather calendar]
     end
 end

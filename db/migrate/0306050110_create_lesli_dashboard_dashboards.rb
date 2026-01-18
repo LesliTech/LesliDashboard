@@ -2,7 +2,7 @@
 
 Lesli
 
-Copyright (c) 2023, Lesli Technologies, S. A.
+Copyright (c) 2026, Lesli Technologies, S. A.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@ along with this program. If not, see http://www.gnu.org/licenses/.
 
 Lesli · Ruby on Rails SaaS Development Framework.
 
-Made with ♥ by https://www.lesli.tech
+Made with ♥ by LesliTech
 Building a better future, one line of code at a time.
 
 @contact  hello@lesli.tech
@@ -32,6 +32,15 @@ Building a better future, one line of code at a time.
 
 class CreateLesliDashboardDashboards < ActiveRecord::Migration[6.1]
     def change
-        create_table_lesli_shared_dashboards_10(:lesli_dashboard)
+        create_table :lesli_dashboard_dashboards do |t|
+            t.string    :engine
+            t.boolean   :default
+            t.datetime  :deleted_at, index: true
+            t.timestamps
+        end
+
+        add_reference(:lesli_dashboard_dashboards, :user, foreign_key: { to_table: :lesli_users }, index: true)
+        add_reference(:lesli_dashboard_dashboards, :role, foreign_key: { to_table: :lesli_roles }, index: true)
+        add_reference(:lesli_dashboard_dashboards, :account, foreign_key: { to_table: :lesli_dashboard_accounts }, null: false)
     end
 end

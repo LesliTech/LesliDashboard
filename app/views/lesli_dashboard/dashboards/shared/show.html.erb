@@ -46,17 +46,18 @@ else
 end
 %>
 
-<% @dashboard ||= { :id=>0, :name=>"", :components=>[] } %>
+<% @dashboard ||= { :id=>0, :name=>"" } %>
+<% @components ||= [] %>
 
 <%= render(LesliView::Layout::Container.new("dashboards-show", :dashboard => false)) do %>
 
     <%= render("lesli_dashboard/dashboards/shared/header") %>
 
-    <%= render(LesliView::Elements::Empty.new(text: "Empty dashboard")) if @dashboard[:components].empty? %>
+    <%= render(LesliView::Elements::Empty.new(text: "Empty dashboard")) if @components.empty? %>
 
     <section class="container">
         <div class="columns is-multiline is-variable dashboard-components">
-            <% @dashboard[:components].each do |component| %>
+            <% @components.each do |component| %>
                 <div class="column is-<%= component["size"] %>">
                     <% component_path = "#{controller.controller_path}/component-#{component["component"].gsub('_','-')}"%>
                     <%= render(component_path, { :component => component }) %>

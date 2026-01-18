@@ -30,9 +30,9 @@ Building a better future, one line of code at a time.
 // · 
 =end
 
-L2.msg("LesliSupport", "Version: #{LesliSupport::VERSION}", "Build: #{LesliSupport::BUILD}")
+L2.msg("LesliDashboard", "Version: #{LesliDashboard::VERSION}", "Build: #{LesliDashboard::BUILD}")
 
 # · load specific environment seeds
 if Rails.env.development? || Lesli.config.demo 
-    load LesliSupport::Engine.root.join("db", "seed", "#{ Rails.env.downcase }.rb")
+    load LesliDashboard::Engine.root.join("db", "seed", "#{ Rails.env.downcase }.rb")
 end 

@@ -1,9 +1,12 @@
 module LesliDashboard
     module Shared
         class Dashboard < ::Lesli::ApplicationLesliRecord
+            self.table_name = "lesli_dashboard_dashboards"
             self.abstract_class = true
 
-            belongs_to :user_creator, class_name: "User", foreign_key: "users_id", optional: true
+            belongs_to :user,     class_name: 'Lesli::User', optional: true
+            belongs_to :account,  class_name: 'LesliDashboard::Account'
+            has_many :components, class_name: 'LesliDashboard::Component'
 
             after_update :verify_default_dashboard
             after_create :verify_default_dashboard
@@ -12,16 +15,40 @@ module LesliDashboard
 
             def self.initialize_account(account)
 
-                dashboard = account.dashboards.find_or_create_by(name: "default")
-                dashboard.default = true
-                dashboard.components = self::COMPONENTS.map do |component|
-                    {
-                        :position => 1,
-                        :size => 4,
-                        :component => component
-                    }
+                pp "Initializing..."
+                pp "Initializing..."
+                pp "Initializing..."
+
+                LesliSystem.engines.each do |engine, data|
+                    next if ['Lesli', 'LesliBabel', 'Root'].include?(engine)
+                    dashboard = account.dashboards
+                    .create_with(:default => true)
+                    .find_or_create_by(engine: engine)
+
+                    #pp LesliSystem::Klass.new(engine: engine)
+                    "#{engine}::Dashboard".constantize::COMPONENTS.each do |component|
+                        dashboard.components.create_with(
+                            :position => 1,
+                            :size => 4
+                        ).find_or_create_by(:component => component)
+                    end
                 end
-                dashboard.save!
+
+                # dashboard = account.account.dashboards.dashboards
+                # .create_with(:default => true)
+                # .find_or_create_by(engine: klass.engine_name)
+
+                # self::COMPONENTS.each do |component|
+                #     dashboard.components.create(
+                #         :component => component,
+                #         :position => 1,
+                #         :size => 4
+                #     )
+                # end
+
+                pp "Finalizing..."
+                pp "Finalizing..."
+                pp "Finalizing..."
             end
 
             # @return [Hash] Hash of containing the information of the dashboard and its components.
