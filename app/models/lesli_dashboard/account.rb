@@ -40,6 +40,32 @@ module LesliDashboard
         after_create :initialize_account
 
         def initialize_account
+            initialize_dashboards(self)
+        end
+
+        def initialize_dashboards(account)
+
+            # Get all the installed and loaded engines 
+            # to register a base dashboard for every engine
+            LesliSystem.engines.each do |engine, data|
+
+                # Skip not work module engine
+                next if ['Lesli', 'LesliBabel', 'Root'].include?(engine)
+
+                # Create a dashboard for the current engine
+                dashboard = account.dashboards
+                .create_with(:default => true)
+                .find_or_create_by(engine: engine)
+
+                # Get the components registered in every engine dashboard model
+                "#{engine}::Dashboard".constantize::COMPONENTS.each do |component|
+
+                    # Add the components to the engine dashboard
+                    dashboard.components
+                    .create_with(:position => 1, :size => 4)
+                    .find_or_create_by(:component => component)
+                end
+            end
         end
     end
 end
