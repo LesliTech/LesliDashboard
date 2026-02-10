@@ -32,6 +32,12 @@ Building a better future, one line of code at a time.
 
 module LesliDashboard
     class Dashboard < Lesli::Shared::Dashboard
-        COMPONENTS = %i[count chart_bar chart_line date weather calendar]
+        COMPONENTS = [
+            :count,
+            :chart_bar,
+            :chart_line, 
+            :calendar,
+            :date,
+            :weather]
     end
 end
