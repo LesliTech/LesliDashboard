@@ -31,7 +31,5 @@ Building a better future, one line of code at a time.
 =end
 
 LesliDashboard::Engine.routes.draw do
-  resources :components
-    Lesli::Router.mount_dashboard_for(LesliDashboard) 
-    get "up" => "/rails/health#show"
+    Lesli::Router.mount_lesli_engine_routes(self) 
 end

@@ -55,5 +55,7 @@ Gem::Specification.new do |spec|
         Dir["{app,config,db,lib}/**/*", "license", "Rakefile", "readme.md"]
     end
 
-    spec.add_dependency "lesli", "~> 5"
+    # Lesli core minimum requirements
+    spec.add_dependency("lesli", "~> 5.0")
+
 end
