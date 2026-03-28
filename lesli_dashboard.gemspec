@@ -56,6 +56,6 @@ Gem::Specification.new do |spec|
     end
 
     # Lesli core minimum requirements
-    spec.add_dependency("lesli", "~> 5.0")
+    spec.add_dependency("lesli", "~> 5.1.0")
 
 end
