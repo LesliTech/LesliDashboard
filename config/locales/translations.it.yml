@@ -1,2 +1,7 @@
 ---
-:it: {}
+it:
+  lesli_dashboard:
+    greetings:
+      morning: Buongiorno
+      afternoon: Buon pomeriggio
+      evening: Buonasera

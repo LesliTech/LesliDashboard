@@ -1,1 +1,10 @@
-<%= render(LesliView::Widgets::Weather.new) %>
+<%# Demo values; replace them with backend weather data when available. %>
+<%= render(
+    LesliView::Widgets::Weather.new(
+        temperature: 26,
+        location: "Guatemala",
+        condition: "Showers",
+        unit: "C",
+        icon: "rainy"
+    )
+) %>

@@ -1,2 +1,7 @@
 ---
-:en: {}
+en:
+  lesli_dashboard:
+    greetings:
+      morning: Good morning
+      afternoon: Good afternoon
+      evening: Good evening

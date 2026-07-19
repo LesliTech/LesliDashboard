@@ -1,2 +1,7 @@
 ---
-:pt: {}
+pt:
+  lesli_dashboard:
+    greetings:
+      morning: Bom dia
+      afternoon: Boa tarde
+      evening: Boa noite

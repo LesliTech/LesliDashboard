@@ -29,45 +29,56 @@ Building a better future, one line of code at a time.
 // · ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~
 // · 
 %>
-<style>
-.dashboard-components .column > div,
-.dashboard-components .column > div > .box{
-    height: 100%;
-}
-</style>
-<%
 
-# Returns the hour (0–23) based on the app's timezone
-hour = Date2.new.date.get.hour  
-welcome_options = ["Good morning", "Good afternoon", "Good evening"]
-welcome_text = ""
-
-if hour < 12
-    welcome_text = welcome_options.first
-elsif hour < 18
-    welcome_text = welcome_options.second
-else
-    welcome_text = welcome_options.third
-end
-%>
-
-<% @dashboard ||= { :id=>0, :name=>"" } %>
 <% @components ||= [] %>
+<%
+# Dashboard component sizes use the same 12-column scale stored in the database.
+# Components stack on small screens and retain their configured width on desktops.
+component_width_classes = {
+    1 => "md:col-span-6 lg:col-span-1",
+    2 => "md:col-span-6 lg:col-span-2",
+    3 => "md:col-span-6 lg:col-span-3",
+    4 => "md:col-span-6 lg:col-span-4",
+    5 => "md:col-span-6 lg:col-span-5",
+    6 => "md:col-span-6 lg:col-span-6",
+    7 => "md:col-span-12 lg:col-span-7",
+    8 => "md:col-span-12 lg:col-span-8",
+    9 => "md:col-span-12 lg:col-span-9",
+    10 => "md:col-span-12 lg:col-span-10",
+    11 => "md:col-span-12 lg:col-span-11",
+    12 => "md:col-span-12 lg:col-span-12"
+}.freeze
+%>
 
 <%= render(LesliView::Layout::Container.new("dashboards-show", :dashboard => false)) do %>
 
     <%= render("lesli_dashboard/dashboards/shared/header") %>
 
-    <%= render(LesliView::Elements::Empty.new(text: "Empty dashboard")) if @components.empty? %>
-
-    <section class="container">
-        <div class="columns is-multiline is-variable dashboard-components">
-            <% @components.each do |component| %>
-                <div class="column is-<%= component["size"] %>">
-                    <% component_path = "#{controller.controller_path}/component-#{component["component"].gsub('_','-')}"%>
-                    <%= render(component_path, { :component => component }) %>
-                </div>
-            <% end %>
-        </div>
-    </section>
+    <% if @components.empty? %>
+        <section
+            class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-6 py-12 sm:py-16"
+            aria-label="Empty dashboard">
+            <%= render(LesliView::Elements::Empty.new(text: "Empty dashboard")) %>
+        </section>
+    <% else %>
+        <section class="mt-6 w-full" aria-label="Dashboard widgets">
+            <div class="grid grid-cols-12 items-stretch gap-4 sm:gap-5 lg:gap-6">
+                <% @components.each do |component| %>
+                    <%
+                    component_size = component["size"].to_i
+                    component_size = 4 unless component_width_classes.key?(component_size)
+                    component_name = component["component"].to_s
+                    component_path = "#{controller.controller_path}/component-#{component_name.dasherize}"
+                    %>
+                    <article
+                        class="col-span-12 min-w-0 <%= component_width_classes.fetch(component_size) %>"
+                        data-dashboard-component="<%= component_name %>">
+                        <div class="h-full min-w-0 [&>*]:h-full [&_.box]:h-full">
+                            <%= render(component_path, { :component => component }) %>
+                        </div>
+                    </article>
+                <% end %>
+            </div>
+        </section>
+    <% end %>
 <% end %>

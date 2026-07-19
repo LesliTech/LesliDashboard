@@ -1,1 +1,15 @@
-<%= render(LesliView::Widgets::Calendar.new) %>
+<%
+# Demo dates keep the widget populated until dashboard events come from the backend.
+# Replace this array with the account's event dates when that integration is available.
+calendar_date = Date.current
+calendar_events = [8, 10, 27].map { |day| calendar_date.change(day: day) }
+%>
+
+<%= render(
+    LesliView::Widgets::Calendar.new(
+        date: calendar_date,
+        events: calendar_events,
+        selected_date: calendar_date,
+        week_starts_on: :sunday
+    )
+) %>

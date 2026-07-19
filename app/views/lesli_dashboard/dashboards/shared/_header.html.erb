@@ -1,21 +1,32 @@
 
 <%
+date = Date2.new
+hour = date.date.get.hour
 
-# Returns the hour (0–23) based on the app's timezone
-hour = Date2.new.date.get.hour  
-welcome_options = ["Good morning", "Good afternoon", "Good evening"]
-welcome_text = ""
+# Select the greeting using the application's configured time zone.
+greeting_key =
+    case hour
+    when 0...12 then "morning"
+    when 12...18 then "afternoon"
+    else "evening"
+    end
 
-if hour < 12
-    welcome_text = welcome_options.first
-elsif hour < 18
-    welcome_text = welcome_options.second
-else
-    welcome_text = welcome_options.third
-end
+greeting_defaults = {
+    "morning" => "Good morning",
+    "afternoon" => "Good afternoon",
+    "evening" => "Good evening"
+}.freeze
+
+greeting = I18n.t(
+    "lesli_dashboard.greetings.#{greeting_key}",
+    default: greeting_defaults.fetch(greeting_key)
+)
+
+# Avoid a trailing comma when the current user or full name is unavailable.
+title = [greeting, current_user&.full_name.presence].compact.join(", ")
 %>
 
 <%= render(LesliView::Components::Header.new(
-    welcome_text + ', ' + current_user&.full_name,
-    Date2.new.date_words_day
+    title,
+    date.date_words_day
 )) %>

@@ -1,2 +1,7 @@
 ---
-:fr: {}
+fr:
+  lesli_dashboard:
+    greetings:
+      morning: Bonjour
+      afternoon: Bon après-midi
+      evening: Bonsoir
