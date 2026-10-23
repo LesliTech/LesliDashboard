@@ -36,6 +36,7 @@
 .DS_Store
 .ruby-version
 brakeman.html
+/coverage/
 
 
 # Rails development files
@@ -44,6 +45,11 @@ brakeman.html
 /pkg/
 /tmp/
 /app2
+/test/dummy/db/*.sqlite3
+/test/dummy/db/*.sqlite3-*
+/test/dummy/log/*.log
+/test/dummy/storage/
+/test/dummy/tmp/
 
 
 # Ignore Lesli gems
