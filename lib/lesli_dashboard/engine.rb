@@ -34,11 +34,7 @@ module LesliDashboard
     class Engine < ::Rails::Engine
         isolate_namespace LesliDashboard
 
-        initializer :lesli_admin do |app|
-
-            # register assets manifest
-            config.assets.precompile += %w[lesli_dashboard_manifest.js]
-
+        initializer :lesli_dashboard do |app|
             # register engine migrations path
             unless app.root.to_s.match root.to_s
                 config.paths["db/migrate"].expanded.each do |expanded_path|
