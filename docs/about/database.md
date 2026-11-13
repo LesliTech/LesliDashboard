@@ -2,6 +2,8 @@
 
 LesliDashboard uses collection code `03` and engine code `06`.
 
+This page describes the current schema. The [Dashboard Contract](/engines/dashboard/about/contract) defines the target data model and lifecycle for the dashboard management implementation. Its required name and revised default rules are pending implementation.
+
 | Migration code | Table | Responsibility | Important relationships |
 | --- | --- | --- | --- |
 | `03.06.00.01.10` | `lesli_dashboard_accounts` | Engine state for a Lesli account | Required core account reference |

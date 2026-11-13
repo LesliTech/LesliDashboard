@@ -2,6 +2,8 @@
 
 LesliDashboard stores dashboards and their component configuration, renders components through their owning engine, and provides a set of general demonstration widgets.
 
+This page describes the current component integration. The [Dashboard Contract](/engines/dashboard/about/contract) defines the agreed management behavior to implement, including multiple dashboards, default selection, soft deletion, and independent instances of the same widget.
+
 ## Register Components in an Engine
 
 An engine declares component names in a dashboard model:
