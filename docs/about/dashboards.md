@@ -19,7 +19,7 @@ module MyEngine
 end
 ```
 
-Symbols use the defaults `size: 4`, `position: 1`, and `config: {}`. A hash supplies initial values for newly created component records.
+Symbols use `size: 4`, their one-based declaration position, and `config: {}`. A hash supplies initial values for newly created component records.
 
 Each name requires a matching partial in the owning engine:
 
@@ -56,10 +56,42 @@ A production component should define:
 * Authorization requirements
 * Rendering and service tests
 
-Run `bin/rails lesli_dashboard:register` after adding a component. Registration creates missing records without overwriting a user's existing layout.
+Registration initializes new dashboards only. New widget definitions are available in the catalog without modifying existing layouts.
 
 ## Selecting a Dashboard
 
 The engine entry point displays the current account's default for that engine. Use `?dashboard_id=123` to select another active dashboard belonging to the same account and engine. Missing, deleted, or out-of-scope identifiers return not found. Viewing the page does not create dashboards.
 
 Components are ordered by `position`, then `id`. The shared presenter resolves their partials from the dashboard's owning engine and maps widths to the responsive grid. An absent dashboard or a dashboard without components displays the translated empty state.
+
+## Widget Catalog
+
+When a Core account is created, its LesliDashboard workspace automatically initializes dashboards and widgets from this catalog. Register custom providers during application initialization so they are available before SaaS account creation. Existing accounts can be initialized through the [maintenance task](/engines/dashboard/about/tasks).
+
+`LesliDashboard::WidgetCatalog.widgets("MyEngine")` returns definitions with `identifier`, `name_key`, translated `name`, `partial`, and initial `options`. Only server-side declarations populate this catalog. Stored component instances reference an identifier; their IDs remain independent.
+
+An engine may customize its declarations:
+
+```ruby
+COMPONENTS = [
+    :summary,
+    { activity: {
+        name_key: "my_engine.widgets.activity",
+        partial: "my_engine/dashboards/component-activity",
+        size: 8,
+        config: { limit: 10 }
+    } }
+].freeze
+```
+
+Names default to `<engine_namespace>.widgets.<identifier>`, with a humanized identifier when no translation exists. Partials default to `<engine_namespace>/dashboards/component-<identifier-with-dashes>`.
+
+For a custom engine, register in its initializer or the host application's `config/initializers/dashboards.rb`:
+
+```ruby
+LesliDashboard::WidgetCatalog.register("MyEngine") do
+    MyEngine::Dashboard::COMPONENTS
+end
+```
+
+The block is evaluated when reading the catalog, so it resolves the current constants after Rails reloads. Registering the same engine again replaces its provider. No database writes happen during catalog registration. The shared presenter uses the catalog's partial path.

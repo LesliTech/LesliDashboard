@@ -2,6 +2,7 @@
 en:
   lesli_dashboard:
     dashboards:
+      initial_name: "%{engine} dashboard"
       empty: "Empty dashboard"
       widgets: "Dashboard widgets"
     greetings:

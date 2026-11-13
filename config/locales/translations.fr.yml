@@ -2,6 +2,7 @@
 fr:
   lesli_dashboard:
     dashboards:
+      initial_name: "Tableau de bord %{engine}"
       empty: "Tableau de bord vide"
       widgets: "Widgets du tableau de bord"
     greetings:

@@ -34,8 +34,8 @@ module LesliDashboard
             first = @first.components.create!(component: "count", position: 1, size: 4, config: {})
             second = @first.components.create!(component: "count", position: 1, size: 4, config: {})
             assert_equal [first, second, last], @first.components.order(:position, :id).to_a
-            presenter = DashboardPresenter.new(@first)
-            assert_equal "example/dashboards/component-chart-bar", presenter.partial_path(last)
+            presenter = DashboardPresenter.new(Dashboard.new(engine: "LesliDashboard"))
+            assert_equal "lesli_dashboard/dashboards/component-chart-bar", presenter.partial_path(last)
             assert_equal "md:col-span-6 lg:col-span-4", presenter.width_class(last)
             assert_empty @second.components
         end

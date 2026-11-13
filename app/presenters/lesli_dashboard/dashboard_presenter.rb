@@ -17,7 +17,7 @@ module LesliDashboard
         }.freeze
 
         def initialize(dashboard)
-            @dashboard = dashboard
+            @widgets = dashboard ? WidgetCatalog.widgets(dashboard.engine).index_by(&:identifier) : {}
         end
 
         def width_class(component)
@@ -25,7 +25,7 @@ module LesliDashboard
         end
 
         def partial_path(component)
-            "#{@dashboard.engine.underscore}/dashboards/component-#{component.component.dasherize}"
+            @widgets.fetch(component.component).partial
         end
     end
 end

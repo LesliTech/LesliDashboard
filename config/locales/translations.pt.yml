@@ -2,6 +2,7 @@
 pt:
   lesli_dashboard:
     dashboards:
+      initial_name: "Painel de %{engine}"
       empty: "Painel vazio"
       widgets: "Widgets do painel"
     greetings:

@@ -19,7 +19,7 @@ bin/rails lesli:db:prepare
 bin/rails db:migrate:status
 ```
 
-When changing component defaults, remember that registration uses `create_with`; it does not overwrite existing records. Use an explicit migration or maintenance task for persisted layouts.
+When changing component defaults, remember that registration initializes only engines without any stored dashboard, including deleted records; it does not modify existing layouts. Use an explicit migration or maintenance task for persisted layouts.
 
 See [Database Architecture](/engines/lesli/database/structure) for account ownership and shared migration helpers.
 

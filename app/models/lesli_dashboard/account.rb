@@ -39,6 +39,8 @@ module LesliDashboard
         has_many :dashboards, inverse_of: :account
         has_many :users, through: :account
 
+        # Core account creation provisions this workspace. Initialize dashboards
+        # in the same transaction so SaaS signups need no maintenance task.
         after_create :initialize_account
 
         def initialize_account
@@ -46,7 +48,7 @@ module LesliDashboard
         end
 
         def initialize_dashboards(account)
-            DashboardService.new(nil).register(account)
+            DashboardRegistrationOperator.new(account).operate
         end
     end
 end

@@ -1,15 +1,15 @@
 namespace :lesli_dashboard do
-
-    desc ""
-    task :register => :environment do |task, args|
-        dashboard_initialize()
-    end
-
-    # Drop, build, migrate & seed database (development only)
-    def dashboard_initialize
-        Lesli::Account.all.each do |account|
-            LesliDashboard::DashboardService.new(nil).register(account.dashboard)
+    desc "Initialize missing dashboards without changing existing layouts"
+    task register: :environment do
+        Lesli::Account.find_each do |core_account|
+            account = LesliDashboard::Account.find_or_initialize_by(account: core_account)
+            if account.persisted?
+                LesliDashboard::DashboardRegistrationOperator.new(account).operate
+            else
+                # Creating the workspace initializes its dashboards through after_create.
+                account.save!
+            end
         end
-        L2.msg("LesliDashboard: Dashboards initialized!")
+        Termline.info("LesliDashboard: Dashboard registration completed.")
     end
 end
