@@ -2,6 +2,6 @@
 it:
   lesli_dashboard:
     greetings:
-      morning: Buongiorno
-      afternoon: Buon pomeriggio
-      evening: Buonasera
+      afternoon: "Buon pomeriggio"
+      evening: "Buonasera"
+      morning: "Buongiorno"

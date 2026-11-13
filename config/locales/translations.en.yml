@@ -2,6 +2,6 @@
 en:
   lesli_dashboard:
     greetings:
-      morning: Good morning
-      afternoon: Good afternoon
-      evening: Good evening
+      afternoon: "Good afternoon"
+      evening: "Good evening"
+      morning: "Good morning"
