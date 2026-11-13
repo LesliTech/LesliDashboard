@@ -95,3 +95,31 @@ end
 ```
 
 The block is evaluated when reading the catalog, so it resolves the current constants after Rails reloads. Registering the same engine again replaces its provider. No database writes happen during catalog registration. The shared presenter uses the catalog's partial path.
+
+## Dashboard Management
+
+The standard mount exposes management at `/dashboard/dashboards`. The **Manage dashboards** link in the shared header opens this list when the user can access it. Engine entry points such as `/support` continue to display their own default dashboard.
+
+| Request | Operation |
+| --- | --- |
+| `GET /dashboard/dashboards` | List the current account's dashboards |
+| `GET /dashboard/dashboards/new` | Show the creation form |
+| `POST /dashboard/dashboards` | Create a dashboard |
+| `GET /dashboard/dashboards/:id` | Show a selected dashboard and its widgets |
+| `GET /dashboard/dashboards/:id/edit` | Show the edit form |
+| `PATCH /dashboard/dashboards/:id` | Update the name or default selection |
+| `DELETE /dashboard/dashboards/:id` | Soft-delete the dashboard and replace its default if needed |
+
+Routes use the `managed_dashboards` helper prefix to preserve the existing singular `dashboard_path` helper. Submitted attributes use the `dashboard` parameter with `name`, `engine`, and `default`. The account comes from the authenticated user. Engines must be in the server catalog when creating a dashboard; updates accept only name and default selection.
+
+The first active dashboard for an engine becomes its default automatically. To change the default, select another dashboard as default. Clearing the current default alone returns a validation error. A new dashboard starts empty; widget editing is a separate implementation phase.
+
+HTML and Turbo mutations redirect with status 303 on success. JSON creation returns the dashboard with status 201; updates and deletion return status 200. Invalid forms return status 422, preserve submitted values, and expose validation errors. Missing or inaccessible records return 404.
+
+When LesliShield is installed, the inherited authentication and authorization checks protect every action under `lesli_dashboard/dashboards`. Grant the required CRUD actions through the usual LesliShield role configuration. Existing installations must refresh their resource/action configuration to include the new routes. The standard preparation task rebuilds resources and synchronizes roles and privileges:
+
+```shell
+bin/rails lesli:db:prepare
+```
+
+Custom roles still need the appropriate action grants in LesliShield.

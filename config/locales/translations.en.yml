@@ -2,6 +2,25 @@
 en:
   lesli_dashboard:
     dashboards:
+      "title": "Dashboards"
+      "new": "Create dashboard"
+      "edit": "Edit dashboard"
+      "delete": "Delete"
+      "confirm_delete": "Delete this dashboard?"
+      "name": "Name"
+      "engine": "Engine"
+      "default": "Default"
+      "actions": "Actions"
+      "yes": "Yes"
+      "no": "No"
+      "save": "Save"
+      "back": "All dashboards"
+      "choose_engine": "Select an engine"
+      "created": "Dashboard created."
+      "updated": "Dashboard updated."
+      "deleted": "Dashboard deleted."
+      "default_required": "must be replaced by another default dashboard"
+      "manage": "Manage dashboards"
       initial_name: "%{engine} dashboard"
       empty: "Empty dashboard"
       widgets: "Dashboard widgets"
@@ -13,3 +32,9 @@ en:
     items/discussions: {}
     items/tasks: {}
     shared: {}
+  activerecord:
+    attributes:
+      lesli_dashboard/dashboard:
+        name: "Name"
+        engine: "Engine"
+        default: "Default"

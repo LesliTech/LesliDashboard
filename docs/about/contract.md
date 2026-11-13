@@ -1,6 +1,6 @@
 # Dashboard Contract
 
-This page defines the agreed behavior for the first dashboard management version. The model and original migration changes are implemented, together with explicit service operations for creation, promotion, and deletion. Controller integration, editing, and component access restrictions are still pending. The [Database](/engines/dashboard/about/database) and [Tasks](/engines/dashboard/about/tasks) pages describe the current implementation.
+This page defines the agreed behavior for the first dashboard management version. The model and original migration changes are implemented, together with explicit service operations for creation, promotion, and deletion. Dashboard CRUD, scoped selection, and presentation are implemented. The component editor and its mutation endpoints remain pending. The [Database](/engines/dashboard/about/database) and [Tasks](/engines/dashboard/about/tasks) pages describe the current implementation.
 
 ## Ownership and Scope
 

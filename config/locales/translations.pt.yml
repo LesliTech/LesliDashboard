@@ -2,6 +2,25 @@
 pt:
   lesli_dashboard:
     dashboards:
+      "title": "Painéis"
+      "new": "Criar painel"
+      "edit": "Editar painel"
+      "delete": "Excluir"
+      "confirm_delete": "Excluir este painel?"
+      "name": "Nome"
+      "engine": "Módulo"
+      "default": "Padrão"
+      "actions": "Ações"
+      "yes": "Sim"
+      "no": "Não"
+      "save": "Salvar"
+      "back": "Todos os painéis"
+      "choose_engine": "Selecione um módulo"
+      "created": "Painel criado."
+      "updated": "Painel atualizado."
+      "deleted": "Painel excluído."
+      "default_required": "deve ser substituído por outro painel padrão"
+      "manage": "Gerenciar painéis"
       initial_name: "Painel de %{engine}"
       empty: "Painel vazio"
       widgets: "Widgets do painel"
@@ -9,3 +28,9 @@ pt:
       afternoon: "Boa tarde"
       evening: "Boa noite"
       morning: "Bom dia"
+  activerecord:
+    attributes:
+      lesli_dashboard/dashboard:
+        name: "Nome"
+        engine: "Módulo"
+        default: "Padrão"

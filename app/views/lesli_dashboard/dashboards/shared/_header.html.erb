@@ -27,6 +27,17 @@ title = [greeting, current_user&.full_name.presence].compact.join(", ")
 %>
 
 <%= render(LesliView::Components::Header.new(
-    title,
+    @dashboard&.name.presence || title,
     date.date_words_day
-)) %>
+)) do %>
+    <% if content_for?(:dashboard_actions) %>
+        <%= content_for(:dashboard_actions) %>
+    <% elsif current_user && (!defined?(LesliShield) || current_user.has_privileges_for?("lesli_dashboard/dashboards", "index")) %>
+        <%= render LesliView::Elements::Button.new(
+            t("lesli_dashboard.dashboards.manage"),
+            url: lesli_dashboard.managed_dashboards_path,
+            icon: "dashboard",
+            solid: false
+        ) %>
+    <% end %>
+<% end %>

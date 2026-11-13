@@ -1,0 +1,15 @@
+<div class="flex flex-wrap items-center gap-4">
+    <% if dashboard_action_allowed?(:edit) %>
+        <%= render LesliView::Elements::Button.new(
+            t("lesli_dashboard.dashboards.edit"), url: edit_managed_dashboard_path(dashboard),
+            icon: "edit", solid: false
+        ) %>
+    <% end %>
+    <% if dashboard_action_allowed?(:destroy) %>
+        <%= render LesliView::Elements::Button.new(
+            t("lesli_dashboard.dashboards.delete"), url: managed_dashboard_path(dashboard), method: :delete,
+            icon: "delete", danger: true, solid: false,
+            data: { turbo_confirm: t("lesli_dashboard.dashboards.confirm_delete") }
+        ) %>
+    <% end %>
+</div>

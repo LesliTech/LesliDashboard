@@ -1,0 +1,29 @@
+<div id="dashboard-form">
+    <%= form_with model: @dashboard, scope: :dashboard, builder: LesliView::Forms::Builder,
+        data: { turbo_frame: "_top" },
+        url: @dashboard.persisted? ? managed_dashboard_path(@dashboard) : managed_dashboards_path do |form| %>
+        <%= form.fieldset do %>
+            <% if @dashboard.errors.any? %>
+                <div role="alert">
+                    <%= form.field_control_builder(message_text: @dashboard.errors.full_messages.to_sentence, category: :danger) %>
+                </div>
+            <% end %>
+
+            <%= form.field_control(:name, label: t("lesli_dashboard.dashboards.name"), required: true) %>
+            <% if @dashboard.persisted? %>
+                <%= form.field_control(:engine, label: t("lesli_dashboard.dashboards.engine"), disabled: true) %>
+            <% else %>
+                <%= form.field_control_select(:engine, LesliDashboard::WidgetCatalog.engines,
+                    label: t("lesli_dashboard.dashboards.engine"), humanize: false,
+                    options: { prompt: t("lesli_dashboard.dashboards.choose_engine") },
+                    html_options: { required: true }) %>
+            <% end %>
+            <%= form.field_control_checkbox(:default, label: t("lesli_dashboard.dashboards.default")) %>
+
+            <%= form.field_control_submit(t("lesli_dashboard.dashboards.save")) %>
+            <%= render LesliView::Elements::Button.new(
+                t("lesli_dashboard.dashboards.back"), url: managed_dashboards_path, icon: "arrow_back", solid: false
+            ) %>
+        <% end %>
+    <% end %>
+</div>

@@ -2,6 +2,25 @@
 es:
   lesli_dashboard:
     dashboards:
+      "title": "Paneles"
+      "new": "Crear panel"
+      "edit": "Editar panel"
+      "delete": "Eliminar"
+      "confirm_delete": "¿Eliminar este panel?"
+      "name": "Nombre"
+      "engine": "Módulo"
+      "default": "Predeterminado"
+      "actions": "Acciones"
+      "yes": "Sí"
+      "no": "No"
+      "save": "Guardar"
+      "back": "Todos los paneles"
+      "choose_engine": "Selecciona un módulo"
+      "created": "Panel creado."
+      "updated": "Panel actualizado."
+      "deleted": "Panel eliminado."
+      "default_required": "debe reemplazarse por otro panel predeterminado"
+      "manage": "Administrar paneles"
       initial_name: "Panel de %{engine}"
       empty: "Panel vacío"
       widgets: "Widgets del panel"
@@ -13,3 +32,9 @@ es:
     items/discussions: {}
     items/tasks: {}
     shared: {}
+  activerecord:
+    attributes:
+      lesli_dashboard/dashboard:
+        name: "Nombre"
+        engine: "Módulo"
+        default: "Predeterminado"

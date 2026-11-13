@@ -31,5 +31,6 @@ Building a better future, one line of code at a time.
 =end
 
 LesliDashboard::Engine.routes.draw do
+    resources :dashboards, as: :managed_dashboards
     Lesli::Router.mount_lesli_engine_routes(self) 
 end

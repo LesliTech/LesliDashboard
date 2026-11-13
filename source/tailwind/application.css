@@ -37,6 +37,6 @@ Building a better future, one line of code at a time.
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 
 
-@source "../../app/views/lesli_dashboard/dashboards/shared/show.html.erb";
+@source "../../app/views/lesli_dashboard/dashboards";
 
 @source "../../app/presenters/lesli_dashboard/dashboard_presenter.rb";

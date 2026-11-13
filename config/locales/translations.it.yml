@@ -2,6 +2,25 @@
 it:
   lesli_dashboard:
     dashboards:
+      "title": "Dashboard"
+      "new": "Crea dashboard"
+      "edit": "Modifica dashboard"
+      "delete": "Elimina"
+      "confirm_delete": "Eliminare questa dashboard?"
+      "name": "Nome"
+      "engine": "Modulo"
+      "default": "Predefinita"
+      "actions": "Azioni"
+      "yes": "Sì"
+      "no": "No"
+      "save": "Salva"
+      "back": "Tutte le dashboard"
+      "choose_engine": "Seleziona un modulo"
+      "created": "Dashboard creata."
+      "updated": "Dashboard aggiornata."
+      "deleted": "Dashboard eliminata."
+      "default_required": "deve essere sostituita da un’altra dashboard predefinita"
+      "manage": "Gestisci dashboard"
       initial_name: "Dashboard %{engine}"
       empty: "Dashboard vuota"
       widgets: "Widget della dashboard"
@@ -9,3 +28,9 @@ it:
       afternoon: "Buon pomeriggio"
       evening: "Buonasera"
       morning: "Buongiorno"
+  activerecord:
+    attributes:
+      lesli_dashboard/dashboard:
+        name: "Nome"
+        engine: "Modulo"
+        default: "Predefinita"
