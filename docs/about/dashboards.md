@@ -165,3 +165,9 @@ Supported controls are text, integer, checkbox, and select. Integers and boolean
 Field labels default to `<engine>.widgets.<widget>_<setting>` and select labels to `<engine>.widgets.<widget>_<setting>_<value>`, with humanized fallbacks. The built-in calendar implements the `week_starts_on` option with `sunday` and `monday` choices. Widget partials consume saved configuration through the `component` local.
 
 Components whose definitions were retired can still be resized, moved, or removed from the editor; no configuration fields are exposed for them.
+
+### Navigation and empty states
+
+The shared dashboard view lists other dashboards for the current account and engine when more than one is available. The selected dashboard is highlighted. Engine entry points such as `/support` preserve their path and select a dashboard through `dashboard_id`; management pages link to the corresponding managed dashboard.
+
+An empty dashboard offers **Add widget**. When an engine has no dashboards, **Create dashboard** opens the form with that engine selected. These actions use LesliView buttons and the existing controller authorization. The responsive twelve-column grid and LesliView widgets remain unchanged.

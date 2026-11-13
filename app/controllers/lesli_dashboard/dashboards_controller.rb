@@ -47,13 +47,16 @@ module LesliDashboard
             return respond_with_not_found unless @service.found?
 
             @dashboard = @service.result
+            @dashboard_engine = @dashboard.engine
+            @dashboards = DashboardService.new(current_user).index(engine: @dashboard.engine).result
             @components = @dashboard.components.order(:position, :id)
             @dashboard_presenter = DashboardPresenter.new(@dashboard)
             respond_with_lesli(json: @dashboard)
         end
 
         def new
-            @dashboard = Dashboard.new
+            engine = params[:engine] if WidgetCatalog.engines.include?(params[:engine])
+            @dashboard = Dashboard.new(engine: engine)
         end
 
         def edit

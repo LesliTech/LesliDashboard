@@ -1,0 +1,20 @@
+<% if @dashboards && @dashboards.size > 1 %>
+    <nav class="flex flex-wrap gap-3" aria-label="<%= t("lesli_dashboard.dashboards.navigation") %>">
+        <% @dashboards.each do |dashboard| %>
+            <%# Keep engine entry points such as /support while changing the selection. %>
+            <%
+                destination = if @dashboard_entry_path
+                    "#{@dashboard_entry_path}?dashboard_id=#{dashboard.id}"
+                else
+                    lesli_dashboard.managed_dashboard_path(dashboard)
+                end
+            %>
+            <span aria-current="<%= "page" if dashboard.id == @dashboard&.id %>">
+                <%= render LesliView::Elements::Button.new(
+                    dashboard.name, url: destination, small: true,
+                    solid: dashboard.id == @dashboard&.id
+                ) %>
+            </span>
+        <% end %>
+    </nav>
+<% end %>

@@ -34,11 +34,26 @@ Building a better future, one line of code at a time.
 
     <%= render("lesli_dashboard/dashboards/shared/header") %>
 
+    <%= render("lesli_dashboard/dashboards/shared/navigation") %>
+
     <% if @components.empty? %>
         <section
             class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 px-6 py-12 sm:py-16"
             aria-label="<%= t("lesli_dashboard.dashboards.empty") %>">
             <%= render(LesliView::Elements::Empty.new(text: t("lesli_dashboard.dashboards.empty"))) %>
+            <div class="mt-6 flex justify-center">
+                <% if @dashboard&.persisted? %>
+                    <%= render LesliView::Elements::Button.new(
+                        t("lesli_dashboard.components.add"),
+                        url: lesli_dashboard.managed_dashboard_components_path(@dashboard), icon: "add"
+                    ) %>
+                <% else %>
+                    <%= render LesliView::Elements::Button.new(
+                        t("lesli_dashboard.dashboards.new"),
+                        url: lesli_dashboard.new_managed_dashboard_path(engine: @dashboard_engine), icon: "add"
+                    ) %>
+                <% end %>
+            </div>
         </section>
     <% else %>
         <section class="mt-6 w-full" aria-label="<%= t("lesli_dashboard.dashboards.widgets") %>">

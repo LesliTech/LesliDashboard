@@ -21,6 +21,7 @@ es:
       moved: "Widget movido."
       removed: "Widget eliminado."
     dashboards:
+      navigation: "Paneles de este módulo"
       "title": "Paneles"
       "new": "Crear panel"
       "edit": "Editar panel"

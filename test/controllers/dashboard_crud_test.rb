@@ -21,6 +21,44 @@ module LesliDashboard
             @controller.define_singleton_method(:_layout) { |*| false }
         end
 
+        test "navigation only includes dashboards from the same account and engine" do
+            dashboard = @core.dashboard.dashboards.find_by!(engine: "LesliDashboard")
+            sibling = dashboard.account.dashboards.create!(name: "Another view", engine: dashboard.engine)
+            get :show, params: { id: dashboard.id }
+            assert_response :success
+            assert_select "nav[aria-label]" do
+                assert_select "a", count: 2
+                assert_select "a[href=?]", managed_dashboard_path(sibling)
+                assert_select "span[aria-current='page']", count: 1
+            end
+        end
+
+        test "engine entry points keep their route and offer creation when empty" do
+            workspace = @core.dashboard
+            dashboard = workspace.dashboards.find_by!(engine: "LesliDashboard")
+            sibling = workspace.dashboards.create!(name: "Second", engine: dashboard.engine)
+            get :show, params: { dashboard_id: sibling.id }
+            assert_response :success
+            assert_select "nav a[href=?]", "#{request.path}?dashboard_id=#{dashboard.id}"
+            workspace.dashboards.where(engine: "LesliDashboard").each(&:destroy!)
+            get :show
+            assert_response :success
+            assert_select "a[href=?]", new_managed_dashboard_path(engine: "LesliDashboard")
+        end
+
+        test "empty dashboards link to the widget editor and new forms preselect the engine" do
+            dashboard = @core.dashboard.dashboards.create!(name: "Empty", engine: "LesliDashboard")
+            get :show, params: { id: dashboard.id }
+            assert_response :success
+            assert_select "section[aria-label] a[href=?]", managed_dashboard_components_path(dashboard)
+            get :new, params: { engine: "LesliSupport" }
+            assert_response :success
+            assert_select "select[name='dashboard[engine]'] option[selected]", text: "LesliSupport"
+            get :new, params: { engine: "Unknown" }
+            assert_response :success
+            assert_select "select[name='dashboard[engine]'] option[value='Unknown']", count: 0
+        end
+
         test "HTML lists scoped dashboards and renders forms" do
             get :index
             assert_response :success

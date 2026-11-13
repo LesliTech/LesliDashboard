@@ -77,6 +77,9 @@ Building a better future, one line of code at a time.
   .items-stretch {
     align-items: stretch;
   }
+  .justify-center {
+    justify-content: center;
+  }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
   }

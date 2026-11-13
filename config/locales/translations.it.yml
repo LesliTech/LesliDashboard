@@ -21,6 +21,7 @@ it:
       moved: "Widget spostato."
       removed: "Widget rimosso."
     dashboards:
+      navigation: "Dashboard di questo modulo"
       "title": "Dashboard"
       "new": "Crea dashboard"
       "edit": "Modifica dashboard"

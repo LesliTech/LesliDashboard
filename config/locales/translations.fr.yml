@@ -21,6 +21,7 @@ fr:
       moved: "Widget déplacé."
       removed: "Widget retiré."
     dashboards:
+      navigation: "Tableaux de bord de ce module"
       "title": "Tableaux de bord"
       "new": "Créer un tableau de bord"
       "edit": "Modifier le tableau de bord"

@@ -21,6 +21,7 @@ en:
       moved: "Widget moved."
       removed: "Widget removed."
     dashboards:
+      navigation: "Dashboards for this engine"
       "title": "Dashboards"
       "new": "Create dashboard"
       "edit": "Edit dashboard"

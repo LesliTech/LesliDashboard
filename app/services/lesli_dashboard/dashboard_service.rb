@@ -5,8 +5,9 @@ module LesliDashboard
         # Methods ending in ! return records directly and let exceptions propagate.
 
         # List active dashboards for the current account in a stable display order.
-        def index
-            response(dashboards.order(:engine, :name, :id))
+        def index(engine: nil)
+            records = engine ? dashboards.where(engine: engine) : dashboards
+            response(records.order(:engine, :name, :id))
         end
 
         # Store an account-scoped lookup for subsequent update/destroy operations.

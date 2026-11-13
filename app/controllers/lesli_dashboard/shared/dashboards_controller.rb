@@ -41,6 +41,9 @@ module LesliDashboard
 
             def show 
                 engine = self.class.module_parent.name
+                @dashboard_engine = engine
+                @dashboard_entry_path = request.path
+                @dashboards = DashboardService.new(current_user).index(engine: engine).result
                 @dashboard = DashboardService.new(current_user).show(
                     engine: engine,
                     id: params[:dashboard_id]
