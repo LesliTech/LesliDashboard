@@ -1,7 +1,12 @@
 ---
 es:
   lesli_dashboard:
+    dashboards: {}
     greetings:
       afternoon: "Buenas tardes"
       evening: "Buenas noches"
       morning: "Buenos días"
+    items/attachments: {}
+    items/discussions: {}
+    items/tasks: {}
+    shared: {}
