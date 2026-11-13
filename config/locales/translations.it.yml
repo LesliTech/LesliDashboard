@@ -1,6 +1,9 @@
 ---
 it:
   lesli_dashboard:
+    dashboards:
+      empty: "Dashboard vuota"
+      widgets: "Widget della dashboard"
     greetings:
       afternoon: "Buon pomeriggio"
       evening: "Buonasera"

@@ -1,6 +1,12 @@
 module LesliDashboard
     class DashboardService < Lesli::ApplicationLesliService
 
+        def show(engine:, id: nil)
+            workspace = current_user.account.dashboard
+            dashboards = workspace ? workspace.dashboards.where(engine: engine) : Dashboard.none
+            response(id.nil? ? dashboards.find_by(default: true) : dashboards.find(id))
+        end
+
         DEFAULT_COMPONENT_OPTIONS = {
             size: 4,
             config: {},

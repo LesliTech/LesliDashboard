@@ -38,3 +38,5 @@ Building a better future, one line of code at a time.
 
 
 @source "../../app/views/lesli_dashboard/dashboards/shared/show.html.erb";
+
+@source "../../app/presenters/lesli_dashboard/dashboard_presenter.rb";

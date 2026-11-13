@@ -40,11 +40,13 @@ module LesliDashboard
             end
 
             def show 
-                builder = LesliSystem::Klass.new(self)
-                @components = []
-                @dashboard = builder.model.dashboard.where(:engine => builder.engine_name).first
-                @components = @dashboard.components if @dashboard
-                #Dashboard.initialize_account(current_user.account.dashboard)
+                engine = self.class.module_parent.name
+                @dashboard = DashboardService.new(current_user).show(
+                    engine: engine,
+                    id: params[:dashboard_id]
+                ).result
+                @components = @dashboard ? @dashboard.components.order(:position, :id) : []
+                @dashboard_presenter = DashboardPresenter.new(@dashboard)
                 render(template:"lesli/shared/dashboards/show")
             end
         end

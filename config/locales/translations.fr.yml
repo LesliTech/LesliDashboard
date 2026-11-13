@@ -1,6 +1,9 @@
 ---
 fr:
   lesli_dashboard:
+    dashboards:
+      empty: "Tableau de bord vide"
+      widgets: "Widgets du tableau de bord"
     greetings:
       afternoon: "Bon après-midi"
       evening: "Bonsoir"

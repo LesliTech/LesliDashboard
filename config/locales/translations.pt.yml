@@ -1,6 +1,9 @@
 ---
 pt:
   lesli_dashboard:
+    dashboards:
+      empty: "Painel vazio"
+      widgets: "Widgets do painel"
     greetings:
       afternoon: "Boa tarde"
       evening: "Boa noite"

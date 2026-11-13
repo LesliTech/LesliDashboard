@@ -1,7 +1,9 @@
 ---
 es:
   lesli_dashboard:
-    dashboards: {}
+    dashboards:
+      empty: "Panel vacío"
+      widgets: "Widgets del panel"
     greetings:
       afternoon: "Buenas tardes"
       evening: "Buenas noches"

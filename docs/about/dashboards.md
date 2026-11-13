@@ -57,3 +57,9 @@ A production component should define:
 * Rendering and service tests
 
 Run `bin/rails lesli_dashboard:register` after adding a component. Registration creates missing records without overwriting a user's existing layout.
+
+## Selecting a Dashboard
+
+The engine entry point displays the current account's default for that engine. Use `?dashboard_id=123` to select another active dashboard belonging to the same account and engine. Missing, deleted, or out-of-scope identifiers return not found. Viewing the page does not create dashboards.
+
+Components are ordered by `position`, then `id`. The shared presenter resolves their partials from the dashboard's owning engine and maps widths to the responsive grid. An absent dashboard or a dashboard without components displays the translated empty state.
