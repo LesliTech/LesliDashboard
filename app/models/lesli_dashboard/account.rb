@@ -2,7 +2,7 @@
 
 Lesli
 
-Copyright (c) 2023, Lesli Technologies, S. A.
+Copyright (c) 2026, Lesli Technologies, S. A.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,11 +19,11 @@ along with this program. If not, see http://www.gnu.org/licenses/.
 
 Lesli · Ruby on Rails SaaS Development Framework.
 
-Made with ♥ by https://www.lesli.tech
+Made with ♥ by LesliTech
 Building a better future, one line of code at a time.
 
 @contact  hello@lesli.tech
-@website  https://www.lesli.dev
+@website  https://www.lesli.tech
 @license  GPLv3 http://www.gnu.org/licenses/gpl-3.0.en.html
 
 // · ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~     ~·~
@@ -32,13 +32,12 @@ Building a better future, one line of code at a time.
 
 module LesliDashboard
     class Account < ApplicationRecord
-        belongs_to :account,
-            class_name: "Lesli::Account",
-            inverse_of: :dashboard
+        self.table_name = "lesli_dashboard_accounts"
+        belongs_to :account, class_name: "Lesli::Account", inverse_of: :dashboard
         validates :account_id, uniqueness: true
 
-        has_many :dashboards
-        has_many :users, class_name: "Lesli::User"
+        has_many :dashboards, inverse_of: :account
+        has_many :users, through: :account
 
         after_create :initialize_account
 

@@ -33,13 +33,14 @@ Building a better future, one line of code at a time.
 class CreateLesliDashboardComponents < ActiveRecord::Migration[8.0]
     def change
         create_table :lesli_dashboard_components do |t|
-            t.string  :component
-            t.integer :position
-            t.integer :size
-            t.json    :config
+            t.string  :component, null: false
+            t.integer :position, null: false, default: 1
+            t.integer :size, null: false, default: 4
+            t.json    :config, null: false, default: {}
             t.timestamps
         end
 
         add_reference(:lesli_dashboard_components, :dashboard, foreign_key: { to_table: :lesli_dashboard_dashboards }, null: false)
+        add_index :lesli_dashboard_components, [:dashboard_id, :position]
     end
 end

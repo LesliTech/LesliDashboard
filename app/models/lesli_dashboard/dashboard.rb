@@ -32,6 +32,7 @@ Building a better future, one line of code at a time.
 
 module LesliDashboard
     class Dashboard < Lesli::Shared::Dashboard
+        self.table_name = "lesli_dashboard_dashboards"
         COMPONENTS = [
             :count,
             :chart_bar,

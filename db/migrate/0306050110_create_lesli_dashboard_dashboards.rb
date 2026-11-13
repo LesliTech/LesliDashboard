@@ -33,14 +33,18 @@ Building a better future, one line of code at a time.
 class CreateLesliDashboardDashboards < ActiveRecord::Migration[6.1]
     def change
         create_table :lesli_dashboard_dashboards do |t|
-            t.string    :engine
-            t.boolean   :default
+            t.string    :name, null: false
+            t.string    :engine, null: false
+            t.boolean   :default, null: false, default: false
             t.datetime  :deleted_at, index: true
             t.timestamps
         end
 
-        add_reference(:lesli_dashboard_dashboards, :user, foreign_key: { to_table: :lesli_users }, index: true)
-        add_reference(:lesli_dashboard_dashboards, :role, foreign_key: { to_table: :lesli_roles }, index: true)
         add_reference(:lesli_dashboard_dashboards, :account, foreign_key: { to_table: :lesli_dashboard_accounts }, null: false)
+        add_index :lesli_dashboard_dashboards, [:account_id, :engine]
+        # Deleted dashboards do not reserve the default for their account and engine.
+        add_index :lesli_dashboard_dashboards, [:account_id, :engine],
+            unique: true, where: '"default" = true AND deleted_at IS NULL',
+            name: "index_dashboard_active_default"
     end
 end
