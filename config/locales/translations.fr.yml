@@ -1,6 +1,25 @@
 ---
 fr:
   lesli_dashboard:
+    widgets:
+      calendar_week_starts_on: "Début de semaine"
+      calendar_week_starts_on_sunday: "Dimanche"
+      calendar_week_starts_on_monday: "Lundi"
+    components:
+      title: "Modifier les widgets"
+      add: "Ajouter un widget"
+      widget: "Widget"
+      choose: "Sélectionner un widget"
+      size: "Largeur (colonnes)"
+      empty: "Aucun widget ajouté"
+      up: "Monter"
+      down: "Descendre"
+      remove: "Retirer"
+      confirm_remove: "Retirer ce widget ?"
+      created: "Widget ajouté."
+      updated: "Widget modifié."
+      moved: "Widget déplacé."
+      removed: "Widget retiré."
     dashboards:
       "title": "Tableaux de bord"
       "new": "Créer un tableau de bord"
@@ -34,3 +53,6 @@ fr:
         name: "Nom"
         engine: "Module"
         default: "Par défaut"
+      lesli_dashboard/component:
+        component: "Widget"
+        size: "Largeur (colonnes)"

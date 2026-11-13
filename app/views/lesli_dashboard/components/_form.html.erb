@@ -1,17 +1,14 @@
-<%= form_with(model: component) do |form| %>
-  <% if component.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(component.errors.count, "error") %> prohibited this component from being saved:</h2>
-
-      <ul>
-        <% component.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+<div id="dashboard-component-form">
+    <%= form_with model: @new_component, scope: :component, builder: LesliView::Forms::Builder,
+        url: managed_dashboard_components_path(@dashboard), data: { turbo_frame: "_top" } do |form| %>
+        <%= form.fieldset(t("lesli_dashboard.components.add")) do %>
+            <% if @new_component.errors.any? %>
+                <div role="alert"><%= form.field_control_builder(message_text: @new_component.errors.full_messages.to_sentence, category: :danger) %></div>
+            <% end %>
+            <%= form.field_control_select(:component, @widgets.values.map { |widget| [widget.name, widget.identifier] },
+                label: t("lesli_dashboard.components.widget"), humanize: false,
+                options: { prompt: t("lesli_dashboard.components.choose") }, html_options: { required: true }) %>
+            <%= form.field_control_submit(t("lesli_dashboard.components.add")) %>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+    <% end %>
+</div>

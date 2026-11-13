@@ -10,6 +10,6 @@ calendar_events = [8, 10, 27].map { |day| calendar_date.change(day: day) }
         date: calendar_date,
         events: calendar_events,
         selected_date: calendar_date,
-        week_starts_on: :sunday
+        week_starts_on: component.config.fetch("week_starts_on", "sunday").to_sym
     )
 ) %>

@@ -40,3 +40,5 @@ Building a better future, one line of code at a time.
 @source "../../app/views/lesli_dashboard/dashboards";
 
 @source "../../app/presenters/lesli_dashboard/dashboard_presenter.rb";
+
+@source "../../app/views/lesli_dashboard/components";

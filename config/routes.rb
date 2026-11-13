@@ -32,5 +32,10 @@ Building a better future, one line of code at a time.
 
 LesliDashboard::Engine.routes.draw do
     resources :dashboards, as: :managed_dashboards
+    scope "dashboards/:dashboard_id", as: :managed_dashboard do
+        resources :components, only: [:index, :create, :update, :destroy] do
+            patch :move, on: :member
+        end
+    end
     Lesli::Router.mount_lesli_engine_routes(self) 
 end

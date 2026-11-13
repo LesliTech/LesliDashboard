@@ -1,6 +1,6 @@
 module LesliDashboard
     module WidgetCatalog
-        Widget = Struct.new(:identifier, :name_key, :partial, :options, keyword_init: true) do
+        Widget = Struct.new(:identifier, :name_key, :partial, :options, :settings, keyword_init: true) do
             def name
                 I18n.t(name_key, default: identifier.humanize)
             end
@@ -34,6 +34,7 @@ module LesliDashboard
                     identifier: identifier,
                     name_key: options.fetch(:name_key, "#{engine.underscore}.widgets.#{identifier}"),
                     partial: options.fetch(:partial, "#{engine.underscore}/dashboards/component-#{identifier.dasherize}"),
+                    settings: options.fetch(:settings, {}),
                     options: { size: 4, position: index + 1, config: {} }.merge(options.slice(:size, :position, :config))
                 )
             end

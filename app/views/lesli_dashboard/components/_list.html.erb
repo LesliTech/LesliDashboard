@@ -1,0 +1,9 @@
+<div id="dashboard-components-list">
+    <% if @components.empty? %>
+        <%= render LesliView::Elements::Empty.new(text: t("lesli_dashboard.components.empty")) %>
+    <% else %>
+        <% @components.each do |component| %>
+            <%= render "lesli_dashboard/components/component", component: component %>
+        <% end %>
+    <% end %>
+</div>

@@ -1,16 +1,7 @@
-<p style="color: green"><%= notice %></p>
-
-<% content_for :title, "Components" %>
-
-<h1>Components</h1>
-
-<div id="components">
-  <% @components.each do |component| %>
-    <%= render component %>
-    <p>
-      <%= link_to "Show this component", component %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New component", new_component_path %>
+<%= render LesliView::Layout::Container.new("dashboard-components") do %>
+    <%= render LesliView::Components::Header.new(t("lesli_dashboard.components.title"), @dashboard.name) do %>
+        <%= render LesliView::Elements::Button.new(t("lesli_dashboard.dashboards.back"), url: managed_dashboard_path(@dashboard), icon: "arrow_back", solid: false) %>
+    <% end %>
+    <%= render "form" %>
+    <%= render "list" %>
+<% end %>

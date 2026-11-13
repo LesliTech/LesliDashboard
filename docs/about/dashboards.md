@@ -112,7 +112,7 @@ The standard mount exposes management at `/dashboard/dashboards`. The **Manage d
 
 Routes use the `managed_dashboards` helper prefix to preserve the existing singular `dashboard_path` helper. Submitted attributes use the `dashboard` parameter with `name`, `engine`, and `default`. The account comes from the authenticated user. Engines must be in the server catalog when creating a dashboard; updates accept only name and default selection.
 
-The first active dashboard for an engine becomes its default automatically. To change the default, select another dashboard as default. Clearing the current default alone returns a validation error. A new dashboard starts empty; widget editing is a separate implementation phase.
+The first active dashboard for an engine becomes its default automatically. To change the default, select another dashboard as default. Clearing the current default alone returns a validation error. A new dashboard starts empty; use **Edit widgets** to compose it.
 
 HTML and Turbo mutations redirect with status 303 on success. JSON creation returns the dashboard with status 201; updates and deletion return status 200. Invalid forms return status 422, preserve submitted values, and expose validation errors. Missing or inaccessible records return 404.
 
@@ -123,3 +123,45 @@ bin/rails lesli:db:prepare
 ```
 
 Custom roles still need the appropriate action grants in LesliShield.
+
+## Component Editor
+
+Open **Edit widgets** from a dashboard's detail or edit page. The editor uses LesliView forms and buttons to add widget instances, change widths, move instances up or down, and remove them. Multiple instances of the same widget are independent. New instances append after the last position. Reordering runs transactionally and normalizes existing position ties. Moving beyond the first or last position is a no-op.
+
+The endpoints are relative to the engine mount:
+
+| Request | Operation |
+| --- | --- |
+| `GET /dashboards/:dashboard_id/components` | List instances and render the catalog/editor |
+| `POST /dashboards/:dashboard_id/components` | Add the widget specified by `component[component]` |
+| `PATCH /dashboards/:dashboard_id/components/:id` | Update `component[size]` and declared `component[config]` fields |
+| `PATCH /dashboards/:dashboard_id/components/:id/move` | Move with `direction=up` or `direction=down` |
+| `DELETE /dashboards/:dashboard_id/components/:id` | Remove one instance permanently |
+
+Parents are resolved within the current account, then instances through that parent. Missing, deleted, foreign-account parents and components from another dashboard return 404. LesliShield authorizes the `index`, `create`, `update`, `move`, and `destroy` actions on `lesli_dashboard/components`. Refresh resource/role configuration after introducing these routes.
+
+Turbo creation refreshes the list and resets the add form. Updates replace only the edited instance. Reordering and deletion refresh the list, including its empty state. Validation errors return 422 and preserve submitted values. HTML mutations redirect to the editor; JSON mutations return `{ component: ..., components: [...] }`, with status 201 for creation and 200 otherwise. JSON validation errors return `{ errors: ... }`.
+
+### Editable Widget Options
+
+Declare editable options in the widget's server-side `settings` map. Options omitted from this map cannot be changed through the editor, even when they are present in the initial `config`.
+
+```ruby
+COMPONENTS = [
+    { summary: {
+        config: { title: "Summary", limit: 10, compact: false, period: "week" },
+        settings: {
+            title: { type: :text, label_key: "my_engine.widgets.summary_title" },
+            limit: { type: :integer },
+            compact: { type: :boolean },
+            period: { type: :select, choices: %w[week month] }
+        }
+    } }
+].freeze
+```
+
+Supported controls are text, integer, checkbox, and select. Integers and booleans are converted to their JSON types; select values must match the declared string choices. Widget-specific business restrictions remain the responsibility of the widget. There is no arbitrary JSON editor.
+
+Field labels default to `<engine>.widgets.<widget>_<setting>` and select labels to `<engine>.widgets.<widget>_<setting>_<value>`, with humanized fallbacks. The built-in calendar implements the `week_starts_on` option with `sunday` and `monday` choices. Widget partials consume saved configuration through the `component` local.
+
+Components whose definitions were retired can still be resized, moved, or removed from the editor; no configuration fields are exposed for them.

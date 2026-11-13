@@ -1,2 +1,48 @@
-<div id="<%= dom_id component %>">
-</div>
+<% widget = @widgets[component.component] %>
+<section id="dashboard-component-<%= component.id %>" class="mb-6">
+    <%= form_with model: component, scope: :component, builder: LesliView::Forms::Builder,
+        url: managed_dashboard_component_path(@dashboard, component), data: { turbo_frame: "_top" } do |form| %>
+        <%= form.fieldset(widget ? widget.name : component.component.humanize) do %>
+            <% if component.errors.any? %>
+                <div role="alert"><%= form.field_control_builder(message_text: component.errors.full_messages.to_sentence, category: :danger) %></div>
+            <% end %>
+            <%= form.field_control_select(:size, ((1..12).to_a + [component.size_before_type_cast]).compact.uniq.map { |size| [size, size] },
+                label: t("lesli_dashboard.components.size"), humanize: false,
+                options: { selected: component.size_before_type_cast }) %>
+            <% if widget %>
+                <%= form.fields_for :config do |settings_form| %>
+                    <% widget.settings.each do |key, definition| %>
+                        <%
+                            value = component.config[key.to_s]
+                            label = t(definition.fetch(:label_key, "#{@dashboard.engine.underscore}.widgets.#{widget.identifier}_#{key}"), default: key.to_s.humanize)
+                        %>
+                        <% if definition.fetch(:type).to_sym == :select %>
+                            <% choices = (definition.fetch(:choices) + [value]).compact.uniq.map do |choice|
+                                [t("#{@dashboard.engine.underscore}.widgets.#{widget.identifier}_#{key}_#{choice}", default: choice.to_s.humanize), choice]
+                            end %>
+                            <%= settings_form.field_control_select(key, choices, label: label, humanize: false,
+                                options: { selected: value }) %>
+                        <% elsif definition[:type].to_sym == :boolean %>
+                            <%= settings_form.field_control_checkbox(key, label: label, checked: ActiveModel::Type::Boolean.new.cast(value)) %>
+                        <% elsif [:integer, :text].include?(definition[:type].to_sym) %>
+                            <%= settings_form.field_control(key, label: label, value: value,
+                                type: definition[:type].to_sym == :integer ? "number" : "text") %>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+            <%= form.field_control_submit(t("lesli_dashboard.dashboards.save")) %>
+        <% end %>
+    <% end %>
+    <div class="flex flex-wrap gap-3">
+        <% %w[up down].each do |direction| %>
+            <%= render LesliView::Elements::Button.new(t("lesli_dashboard.components.#{direction}"),
+                url: move_managed_dashboard_component_path(@dashboard, component), method: :patch,
+                params: { direction: direction }, icon: "arrow_#{direction}ward", solid: false, small: true) %>
+        <% end %>
+        <%= render LesliView::Elements::Button.new(t("lesli_dashboard.components.remove"),
+            url: managed_dashboard_component_path(@dashboard, component), method: :delete,
+            data: { turbo_confirm: t("lesli_dashboard.components.confirm_remove") },
+            icon: "delete", danger: true, solid: false, small: true) %>
+    </div>
+</section>

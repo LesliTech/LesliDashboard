@@ -30,7 +30,7 @@ Run it after:
 * Installing LesliDashboard into an application with existing accounts
 * Installing another engine that registers components
 
-New widget definitions become available immediately through the catalog. Adding them to an existing dashboard belongs to the editor, which is pending implementation.
+New widget definitions become available immediately through the catalog. Add them to an existing dashboard through the component editor.
 
 Review account counts before running it in a large production database; work is performed synchronously for every account.
 

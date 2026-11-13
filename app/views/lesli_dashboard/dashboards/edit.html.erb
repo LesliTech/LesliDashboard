@@ -1,4 +1,8 @@
 <%= render LesliView::Layout::Container.new("dashboards-edit") do %>
-    <%= render LesliView::Components::Header.new(t("lesli_dashboard.dashboards.edit")) %>
+    <%= render LesliView::Components::Header.new(t("lesli_dashboard.dashboards.edit")) do %>
+        <%= render LesliView::Elements::Button.new(
+            t("lesli_dashboard.components.title"), url: managed_dashboard_components_path(@dashboard), icon: "widgets"
+        ) %>
+    <% end %>
     <%= render "form" %>
 <% end %>

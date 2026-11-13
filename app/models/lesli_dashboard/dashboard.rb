@@ -37,7 +37,10 @@ module LesliDashboard
             :count,
             :chart_bar,
             :chart_line, 
-            :calendar,
+            { calendar: {
+                config: { week_starts_on: "sunday" },
+                settings: { week_starts_on: { type: :select, choices: %w[sunday monday] } }
+            } },
             :date,
             :weather]
     end

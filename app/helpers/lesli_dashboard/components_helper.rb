@@ -1,4 +1,4 @@
 module LesliDashboard
-  module ComponentsHelper
-  end
+    module ComponentsHelper
+    end
 end

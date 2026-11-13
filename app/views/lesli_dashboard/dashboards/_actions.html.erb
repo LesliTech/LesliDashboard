@@ -1,4 +1,8 @@
 <div class="flex flex-wrap items-center gap-4">
+    <%= render LesliView::Elements::Button.new(
+        t("lesli_dashboard.components.title"), url: managed_dashboard_components_path(dashboard),
+        icon: "widgets", solid: false, small: true
+    ) %>
     <% if dashboard_action_allowed?(:edit) %>
         <%= render LesliView::Elements::Button.new(
             t("lesli_dashboard.dashboards.edit"), url: edit_managed_dashboard_path(dashboard),
