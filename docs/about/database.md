@@ -2,7 +2,7 @@
 
 LesliDashboard uses collection code `03` and engine code `06`.
 
-This page describes the current schema. The [Dashboard Contract](/engines/dashboard/about/contract) defines the target data model and lifecycle for the dashboard management implementation. The original migrations now include the required name, component defaults, lookup indexes, and a unique active default per account and engine. Rebuild disposable development/test databases to apply these changes to already-created tables.
+This page describes the current schema. The [Dashboard Contract](/engines/dashboard/about/contract) defines the data model and lifecycle for the dashboard management implementation. The original migrations now include the required name, component defaults, lookup indexes, and a unique active default per account and engine. Rebuild disposable development/test databases to apply these changes to already-created tables.
 
 | Migration code | Table | Responsibility | Important relationships |
 | --- | --- | --- | --- |
@@ -27,4 +27,17 @@ See [Database Architecture](/engines/lesli/database/structure) for account owner
 
 `LesliDashboard::DashboardService` provides `create!(account:, engine:, name:, default: false)`, `make_default!(dashboard)`, and `destroy!(dashboard)`. These operations lock the workspace and run transactionally. Use them for default lifecycle changes; direct model writes do not perform replacement or promotion. The database index prevents multiple active defaults but cannot require one to exist.
 
-Deleting a dashboard through the service retains its components and promotes the oldest remaining dashboard in the same account and engine. Controller and component access restrictions are scheduled for the next implementation phases.
+Deleting a dashboard through the service retains its components and promotes the oldest remaining dashboard in the same account and engine. Controllers scope dashboards to the authenticated account and components to their parent dashboard. Missing, deleted, and inaccessible parents return 404.
+
+## Breaking Changes
+
+This development release modifies the original migrations. Running `db:migrate` does not update a table whose original migration has already run. Rebuild only disposable development/test databases; retain backups and write an explicit data migration if an existing database must be preserved.
+
+- Dashboards now require `name`, `engine`, and their local engine `account_id`.
+- User/role ownership columns and the nested `Dashboard::Component` implementation are removed. Use `LesliDashboard::Component` and `dashboard.components`.
+- Components require an identifier, positive integer position, width from 1 to 12, and JSON object configuration.
+- The partial unique index permits at most one non-deleted default per account and engine on SQLite and PostgreSQL. Service operations maintain the lifecycle; direct writes can still leave no default.
+- Dashboard deletion is soft; its components remain stored. Removing an individual widget permanently deletes that instance.
+- Registration no longer reconciles existing layouts. Removing or renaming a widget definition requires explicitly migrating or removing stored instances before rendering those dashboards. The editor permits removing retired instances, but their dashboard partial cannot be resolved from a missing catalog definition.
+
+Workspace transactions serialize registration and default changes using row locks on PostgreSQL. SQLite permits a single writer and does not provide equivalent row locks; contending writers may need retrying after a busy/locked response. The unique default index protects against duplicate defaults on both adapters.

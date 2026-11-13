@@ -45,11 +45,12 @@ It lets applications compose reusable, configurable dashboards from account-scop
 
 ## Features
 
-- Multiple account-scoped dashboards
-- Reusable dashboard components
-- Configurable component position and size
-- Component-specific configuration
-- Shared dashboards for teams and workflows
+- Multiple dashboards per account and engine, with one active default
+- Automatic initialization during account signup; repeatable registration for existing accounts
+- A widget editor for adding repeated instances, resizing, reordering, and removing widgets
+- Explicitly declared configuration fields, with HTML, Turbo, and JSON responses
+- Account-scoped access and optional LesliShield authorization
+- Responsive LesliView widgets and navigation between dashboards
 
 <br />
 
@@ -130,17 +131,24 @@ bin/rails server
 
 ### Tests
 
-From a complete Lesli development workspace, run the engine test suite from the LesliDashboard directory:
+From the engine directory, prepare the dummy database and run the suite:
 
 ```shell
-cd engines/LesliDashboard
-bin/rails test
+RAILS_ENV=test bundle exec rake -f test/dummy/Rakefile db:migrate
+bundle exec rake test
 ```
+
+Use `DATABASE_URL` to select an isolated SQLite or PostgreSQL test database. For unreleased local Core and LesliView changes, use the workspace manifest described in the [testing guide](docs/about/testing.md). It loads Core and Dashboard without the other engines. PostgreSQL tests exercise concurrent registration and default promotion using separate connections.
 
 <br />
 
 ## Documentation
 
+- [Dashboard contract](docs/about/contract.md)
+- [Widget registration and editor](docs/about/dashboards.md)
+- [Initialization task](docs/about/tasks.md)
+- [Schema and breaking changes](docs/about/database.md)
+- [Testing](docs/about/testing.md)
 - [Lesli website](https://www.lesli.dev/)
 - [Documentation](https://www.lesli.dev/engines/dashboard)
 - [Release notes](https://github.com/LesliTech/LesliDashboard/releases)

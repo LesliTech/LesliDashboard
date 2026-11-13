@@ -2,7 +2,7 @@
 
 LesliDashboard stores dashboards and their component configuration, renders components through their owning engine, and provides a set of general demonstration widgets.
 
-This page describes the current component integration. The [Dashboard Contract](/engines/dashboard/about/contract) defines the agreed management behavior to implement, including multiple dashboards, default selection, soft deletion, and independent instances of the same widget.
+This page describes the current component integration. The [Dashboard Contract](/engines/dashboard/about/contract) defines the implemented management behavior, including multiple dashboards, default selection, soft deletion, and independent instances of the same widget.
 
 ## Register Components in an Engine
 
@@ -10,16 +10,37 @@ An engine declares component names in a dashboard model:
 
 ```ruby
 module MyEngine
-  class Dashboard < Lesli::Shared::Dashboard
-    COMPONENTS = [
-      :summary,
-      { activity: { size: 8, position: 2, config: { limit: 10 } } }
-    ].freeze
-  end
+    class Dashboard < Lesli::Shared::Dashboard
+        COMPONENTS = [
+            :summary,
+            { activity: { size: 8, position: 2, config: { limit: 10 } } }
+        ].freeze
+    end
 end
 ```
 
 Symbols use `size: 4`, their one-based declaration position, and `config: {}`. A hash supplies initial values for newly created component records.
+
+Prefer symbols when those defaults are sufficient. For example, this declaration creates three widgets with width 4, followed by a full-width widget:
+
+```ruby
+module LesliAdmin
+    class Dashboard < Lesli::Shared::Dashboard
+        COMPONENTS = [
+            :users,
+            :roles,
+            :installed_engines,
+            { account_metadata: { size: 12 } }
+        ].freeze
+    end
+end
+```
+
+This is equivalent to explicitly setting positions 1 through 4 and sizes 4, 4, 4, and 12. Keep explicit positions only when they intentionally differ from declaration order.
+
+`COMPONENTS` defines both the available catalog and the widgets added to the initial dashboard. These are creation defaults, not live overrides: changing the constant or repeating registration does not update existing records. Use **Edit widgets** to resize an existing instance. The renderer reads its persisted `size`.
+
+Width uses a twelve-column grid. Below 768px every widget spans the full row; from 768px widths 1–6 span half a row and widths 7–12 span a full row; from 1024px the exact saved width applies. The shared view registers LesliDashboard's stylesheet through `content_for :head`. The application layout renders that content in its `<head>`, including when another engine displays the dashboard.
 
 Each name requires a matching partial in the owning engine:
 

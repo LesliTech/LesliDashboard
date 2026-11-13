@@ -16,6 +16,7 @@ module LesliDashboard
             end.new(@core, true)
             user = @user
             @controller.define_singleton_method(:current_user) { user }
+            @controller.class.helper_method :current_user
             @controller.define_singleton_method(:authenticate_request) { true }
             @controller.define_singleton_method(:log_requests) { true }
             @controller.define_singleton_method(:log) { |*| true }
@@ -155,6 +156,19 @@ module LesliDashboard
             @user.allowed = false
             post :create, params: { dashboard_id: @dashboard.id, component: { component: "date" } }, format: :json
             assert_response :forbidden
+        end
+
+        test "failed component creation preserves selection and does not append a record" do
+            providers = WidgetCatalog.instance_variable_get(:@providers).dup
+            WidgetCatalog.register("LesliDashboard") { [{ date: { size: 99 } }] }
+            before = @dashboard.components.order(:id).pluck(:id, :position)
+            post :create, params: { dashboard_id: @dashboard.id, component: { component: "date" } }, format: :turbo_stream
+            assert_response :unprocessable_content
+            assert_select "#dashboard-component-form option[selected][value='date']"
+            assert_select "#dashboard-component-form [role='alert']"
+            assert_equal before, @dashboard.components.order(:id).pluck(:id, :position)
+        ensure
+            WidgetCatalog.instance_variable_set(:@providers, providers)
         end
     end
 end

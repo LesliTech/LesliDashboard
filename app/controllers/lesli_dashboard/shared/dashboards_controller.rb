@@ -33,12 +33,6 @@ Building a better future, one line of code at a time.
 module LesliDashboard
     module Shared
         class DashboardsController < ApplicationController
-            #before_action :set_dashboard, only: [:show, :update, :destroy, :options]
-
-            def edit 
-                # renders the edit view for dashboard
-            end
-
             def show 
                 engine = self.class.module_parent.name
                 @dashboard_engine = engine

@@ -54,3 +54,5 @@ brakeman.html
 
 # Ignore Lesli gems
 lesli*.gem
+
+/test/Gemfile.workspace.lock

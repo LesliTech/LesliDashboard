@@ -30,6 +30,10 @@ Building a better future, one line of code at a time.
 // · 
 %>
 
+<% content_for :head do %>
+    <%= stylesheet_link_tag "lesli_dashboard/application", media: "all" %>
+<% end %>
+
 <%= render(LesliView::Layout::Container.new("dashboards-show", :dashboard => false)) do %>
 
     <%= render("lesli_dashboard/dashboards/shared/header") %>

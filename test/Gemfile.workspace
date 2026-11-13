@@ -1,0 +1,16 @@
+source "https://rubygems.org"
+
+workspace = File.expand_path("../../..", __dir__)
+
+gem "lesli_dashboard", path: File.join(workspace, "engines/LesliDashboard")
+gem "lesli", path: File.join(workspace, "engines/Lesli")
+
+%w[LesliView LesliAssets LesliSystem LesliTesting LesliDate Termline].each do |name|
+    gem_name = name.gsub(/([a-z])([A-Z])/, '\\1_\\2').downcase
+    gem gem_name, path: File.join(workspace, "gems", name)
+end
+
+gem "sqlite3"
+gem "pg", require: false
+gem "propshaft"
+gem "puma"

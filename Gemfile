@@ -7,6 +7,7 @@ gemspec
 gem "puma"
 
 gem "sqlite3"
+gem "pg", require: false
 
 gem "propshaft"
 

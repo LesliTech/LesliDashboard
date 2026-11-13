@@ -15,6 +15,7 @@ module LesliDashboard
             end.new(@core, true)
             user = @user
             @controller.define_singleton_method(:current_user) { user }
+            @controller.class.helper_method :current_user
             @controller.define_singleton_method(:authenticate_request) { true }
             @controller.define_singleton_method(:log_requests) { true }
             @controller.define_singleton_method(:log) { |*| true }
@@ -51,9 +52,9 @@ module LesliDashboard
             get :show, params: { id: dashboard.id }
             assert_response :success
             assert_select "section[aria-label] a[href=?]", managed_dashboard_components_path(dashboard)
-            get :new, params: { engine: "LesliSupport" }
+            get :new, params: { engine: "LesliDashboard" }
             assert_response :success
-            assert_select "select[name='dashboard[engine]'] option[selected]", text: "LesliSupport"
+            assert_select "select[name='dashboard[engine]'] option[selected]", text: "LesliDashboard"
             get :new, params: { engine: "Unknown" }
             assert_response :success
             assert_select "select[name='dashboard[engine]'] option[value='Unknown']", count: 0

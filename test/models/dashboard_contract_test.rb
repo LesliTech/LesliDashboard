@@ -26,6 +26,25 @@ module LesliDashboard
             assert_equal 1, second.position
         end
 
+        test "width boundaries and positions require positive integers" do
+            component = Component.new(component: "date", config: {})
+            [1, 12].each do |size|
+                component.size = size
+                component.validate
+                assert_empty component.errors[:size]
+            end
+            [0, 13, 1.5].each do |size|
+                component.size = size
+                component.validate
+                assert component.errors[:size].present?
+            end
+            [0, -1, 1.5].each do |position|
+                component.position = position
+                component.validate
+                assert component.errors[:position].present?
+            end
+        end
+
         test "users belong to the core account through the workspace" do
             assert_equal :account, Account.reflect_on_association(:users).options[:through]
             assert_equal "lesli_dashboard_dashboards", Dashboard.table_name

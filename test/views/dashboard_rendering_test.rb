@@ -29,14 +29,37 @@ module LesliDashboard
             component = Component.new(component: "date", size: 8)
             I18n.with_locale(:es) do
                 html = RenderingController.render(
-                    template: "lesli/shared/dashboards/show",
+                    inline: <<~ERB,
+                        <% dashboard_html = render(template: "lesli/shared/dashboards/show") %>
+                        <html>
+                            <head><%= content_for(:head) if content_for?(:head) %></head>
+                            <body><%= dashboard_html %></body>
+                        </html>
+                    ERB
                     layout: false,
                     assigns: { dashboard: dashboard, components: [component], dashboard_presenter: DashboardPresenter.new(dashboard) }
                 )
-                document = Nokogiri::HTML.fragment(html)
+                document = Nokogiri::HTML(html)
                 assert document.at_css('section[aria-label="Widgets del panel"]')
+                assert document.at_css('head link[rel="stylesheet"][href*="lesli_dashboard/application"]')
+                assert_nil document.at_css('body link[rel="stylesheet"]')
                 assert_includes document.at_css('article')["class"], "lg:col-span-8"
             end
+        end
+
+        test "editor and navigation labels exist in every supported locale" do
+            # Read the engine catalog independently: a host may load only a subset.
+            previous_locales = I18n.available_locales
+            I18n.available_locales = previous_locales | %i[en es fr it pt]
+            translations = I18n::Backend::Simple.new
+            translations.load_translations(*LesliDashboard::Engine.root.glob("config/locales/translations.*.yml"))
+            %i[en es fr it pt].each do |locale|
+                %w[dashboards.navigation dashboards.empty dashboards.new components.empty components.add components.created components.updated components.removed].each do |key|
+                    assert translations.translate(locale, "lesli_dashboard.#{key}").present?
+                end
+            end
+        ensure
+            I18n.available_locales = previous_locales
         end
     end
 end
