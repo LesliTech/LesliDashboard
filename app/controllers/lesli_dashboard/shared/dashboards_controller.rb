@@ -42,6 +42,7 @@ module LesliDashboard
                     engine: engine,
                     id: params[:dashboard_id]
                 ).result
+
                 @components = @dashboard ? @dashboard.components.order(:position, :id) : []
                 @dashboard_presenter = DashboardPresenter.new(@dashboard)
                 render(template:"lesli/shared/dashboards/show")

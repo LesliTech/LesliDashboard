@@ -48,10 +48,6 @@ en:
       afternoon: "Good afternoon"
       evening: "Good evening"
       morning: "Good morning"
-    items/attachments: {}
-    items/discussions: {}
-    items/tasks: {}
-    shared: {}
   activerecord:
     attributes:
       lesli_dashboard/dashboard:
