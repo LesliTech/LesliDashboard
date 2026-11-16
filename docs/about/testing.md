@@ -6,9 +6,22 @@ Run commands from the LesliDashboard directory. Always use a dedicated test data
 
 ```shell
 bundle install
-RAILS_ENV=test bundle exec rake -f test/dummy/Rakefile db:migrate
 bundle exec rake test
 ```
+
+The dummy keeps `maintain_test_schema` enabled and includes both Core and
+Dashboard migration paths. Keep `test/dummy/db/schema.rb` in version control;
+Rails uses it to initialize a fresh test database.
+
+To rebuild a disposable test database explicitly, use the engine's Rake tasks:
+
+```shell
+RAILS_ENV=test bundle exec rake app:db:drop app:db:create app:db:migrate
+```
+
+This deletes the selected test database. Use `app:db:migrate` alone when its
+data should be retained. The engine task wrapper adds Dashboard's migration
+paths; do not bypass it with `-f test/dummy/Rakefile`.
 
 ## Standalone with Workspace Dependencies
 
@@ -19,7 +32,7 @@ export BUNDLE_GEMFILE="$PWD/test/Gemfile.workspace"
 bundle install
 export RAILS_ENV=test
 export DATABASE_URL=sqlite3:/tmp/lesli_dashboard_test.sqlite3
-bundle exec rake -f test/dummy/Rakefile db:migrate
+bundle exec rake app:db:migrate
 bundle exec rake test
 ```
 
@@ -27,7 +40,7 @@ For PostgreSQL, create a dedicated database, change `DATABASE_URL` to its connec
 
 ```shell
 export DATABASE_URL=postgresql://localhost/lesli_dashboard_test
-bundle exec rake -f test/dummy/Rakefile db:migrate
+bundle exec rake app:db:migrate
 bundle exec rake test
 ```
 

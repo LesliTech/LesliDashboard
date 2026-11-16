@@ -131,10 +131,9 @@ bin/rails server
 
 ### Tests
 
-From the engine directory, prepare the dummy database and run the suite:
+From the engine directory, run the suite. Rails prepares the test database from the dummy schema:
 
 ```shell
-RAILS_ENV=test bundle exec rake -f test/dummy/Rakefile db:migrate
 bundle exec rake test
 ```
 
