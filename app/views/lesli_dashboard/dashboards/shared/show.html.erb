@@ -30,8 +30,11 @@ Building a better future, one line of code at a time.
 // · 
 %>
 
-<% content_for :head do %>
-    <%= stylesheet_link_tag "lesli_dashboard/application", media: "all" %>
+<%# The main layout already includes this stylesheet inside LesliDashboard. %>
+<% unless lesli_engine(:code) == "lesli_dashboard" %>
+    <% content_for :head do %>
+        <%= stylesheet_link_tag "lesli_dashboard/application", media: "all", "data-turbo-track": "dynamic" %>
+    <% end %>
 <% end %>
 
 <%= render(LesliView::Layout::Container.new("dashboards-show", :dashboard => false)) do %>
