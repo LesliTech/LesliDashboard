@@ -1,4 +1,4 @@
-/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.3.4 | MIT License | https://tailwindcss.com */
 /*!
 
 Lesli
@@ -32,23 +32,15 @@ Building a better future, one line of code at a time.
 */
 @layer properties;
 @layer theme, utilities;
-@layer theme {
-  :root, :host {
-    --color-slate-50: oklch(98.4% 0.003 247.858);
-    --color-slate-300: oklch(86.9% 0.022 252.894);
-    --spacing: 0.25rem;
-    --radius-2xl: 1rem;
-  }
-}
 @layer utilities {
   .col-span-12 {
     grid-column: span 12 / span 12;
   }
   .mt-6 {
-    margin-top: calc(var(--spacing) * 6);
+    margin-top: calc(var(--spacing, 0.25rem) * 6);
   }
   .mb-6 {
-    margin-bottom: calc(var(--spacing) * 6);
+    margin-bottom: calc(var(--spacing, 0.25rem) * 6);
   }
   .flex {
     display: flex;
@@ -81,13 +73,13 @@ Building a better future, one line of code at a time.
     justify-content: center;
   }
   .gap-3 {
-    gap: calc(var(--spacing) * 3);
+    gap: calc(var(--spacing, 0.25rem) * 3);
   }
   .gap-4 {
-    gap: calc(var(--spacing) * 4);
+    gap: calc(var(--spacing, 0.25rem) * 4);
   }
   .rounded-2xl {
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-2xl, 1rem);
   }
   .border {
     border-style: var(--tw-border-style);
@@ -98,26 +90,26 @@ Building a better future, one line of code at a time.
     border-style: dashed;
   }
   .border-slate-300 {
-    border-color: var(--color-slate-300);
+    border-color: var(--color-slate-300, oklch(86.9% 0.022 252.894));
   }
   .bg-slate-50\/70 {
     background-color: color-mix(in srgb, oklch(98.4% 0.003 247.858) 70%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-slate-50) 70%, transparent);
+      background-color: color-mix(in oklab, var(--color-slate-50, oklch(98.4% 0.003 247.858)) 70%, transparent);
     }
   }
   .px-6 {
-    padding-inline: calc(var(--spacing) * 6);
+    padding-inline: calc(var(--spacing, 0.25rem) * 6);
   }
   .py-12 {
-    padding-block: calc(var(--spacing) * 12);
+    padding-block: calc(var(--spacing, 0.25rem) * 12);
   }
   @media (width >= 40rem) {
     .sm\:gap-5 {
-      gap: calc(var(--spacing) * 5);
+      gap: calc(var(--spacing, 0.25rem) * 5);
     }
     .sm\:py-16 {
-      padding-block: calc(var(--spacing) * 16);
+      padding-block: calc(var(--spacing, 0.25rem) * 16);
     }
   }
   @media (width >= 48rem) {
@@ -166,7 +158,7 @@ Building a better future, one line of code at a time.
       grid-column: span 12 / span 12;
     }
     .lg\:gap-6 {
-      gap: calc(var(--spacing) * 6);
+      gap: calc(var(--spacing, 0.25rem) * 6);
     }
   }
   .\[\&_\.box\]\:h-full .box {
@@ -182,7 +174,7 @@ Building a better future, one line of code at a time.
   initial-value: solid;
 }
 @layer properties {
-  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: block))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
       --tw-border-style: solid;
     }
