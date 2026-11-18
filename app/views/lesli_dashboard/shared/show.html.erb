@@ -31,17 +31,15 @@ Building a better future, one line of code at a time.
 %>
 
 <%# The main layout already includes this stylesheet inside LesliDashboard. %>
-<% unless lesli_engine(:code) == "lesli_dashboard" %>
-    <% content_for :head do %>
-        <%= stylesheet_link_tag "lesli_dashboard/application", media: "all", "data-turbo-track": "dynamic" %>
-    <% end %>
+<% content_for :head do %>
+    <%= stylesheet_link_tag "lesli_dashboard/dashboard", media: "all", "data-turbo-track": "dynamic" %>
 <% end %>
 
 <%= render(LesliView::Layout::Container.new("dashboards-show", :dashboard => false)) do %>
 
-    <%= render("lesli_dashboard/dashboards/shared/header") %>
+    <%= render("lesli_dashboard/shared/header") %>
 
-    <%= render("lesli_dashboard/dashboards/shared/navigation") %>
+    <%= render("lesli_dashboard/shared/navigation") %>
 
     <% if @components.empty? %>
         <section

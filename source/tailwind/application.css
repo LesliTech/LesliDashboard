@@ -34,12 +34,8 @@ Building a better future, one line of code at a time.
 
 
 /* Theme values are loaded once by LesliAssets. */
-@reference "tailwindcss/theme.css";
+@import "tailwindcss/theme.css" theme(reference);
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 
-
-@source "../../app/views/lesli_dashboard/dashboards";
-
-@source "../../app/presenters/lesli_dashboard/dashboard_presenter.rb";
-
 @source "../../app/views/lesli_dashboard/components";
+@source "../../app/views/lesli_dashboard/dashboards";

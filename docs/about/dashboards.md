@@ -60,7 +60,7 @@ LesliDashboard registers:
 | `count` | `LesliView::Widgets::Count` |
 | `chart_bar` | Bar chart |
 | `chart_line` | Line chart |
-| `calendar` | Calendar widget |
+| `leslicalendar` | Calendar widget |
 | `date` | Date widget |
 | `weather` | Weather widget |
 
@@ -131,7 +131,7 @@ The standard mount exposes management at `/dashboard/dashboards`. The **Manage d
 | `PATCH /dashboard/dashboards/:id` | Update the name or default selection |
 | `DELETE /dashboard/dashboards/:id` | Soft-delete the dashboard and replace its default if needed |
 
-Routes use the `managed_dashboards` helper prefix to preserve the existing singular `dashboard_path` helper. Submitted attributes use the `dashboard` parameter with `name`, `engine`, and `default`. The account comes from the authenticated user. Engines must be in the server catalog when creating a dashboard; updates accept only name and default selection.
+Routes use the `managed_dashboards` helper prefix to preserve the existing singular `dashboard_path` helper. Submitted attributes use the `leslidashboard` parameter with `name`, `engine`, and `default`. The account comes from the authenticated user. Engines must be in the server catalog when creating a dashboard; updates accept only name and default selection.
 
 The first active dashboard for an engine becomes its default automatically. To change the default, select another dashboard as default. Clearing the current default alone returns a validation error. A new dashboard starts empty; use **Edit widgets** to compose it.
 
