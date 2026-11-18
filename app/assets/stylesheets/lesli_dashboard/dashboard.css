@@ -57,11 +57,17 @@ Building a better future, one line of code at a time.
   .grid-cols-12 {
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
   .items-stretch {
     align-items: stretch;
   }
   .justify-center {
     justify-content: center;
+  }
+  .gap-3 {
+    gap: calc(var(--spacing, 0.25rem) * 3);
   }
   .gap-4 {
     gap: calc(var(--spacing, 0.25rem) * 4);
@@ -77,13 +83,13 @@ Building a better future, one line of code at a time.
     --tw-border-style: dashed;
     border-style: dashed;
   }
-  .border-slate-300 {
-    border-color: var(--color-slate-300, oklch(86.9% 0.022 252.894));
+  .border-neutral-300 {
+    border-color: var(--lesli-color-neutral-300);
   }
-  .bg-slate-50\/70 {
-    background-color: color-mix(in srgb, oklch(98.4% 0.003 247.858) 70%, transparent);
+  .bg-neutral-50\/70 {
+    background-color: var(--lesli-color-neutral-50);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-slate-50, oklch(98.4% 0.003 247.858)) 70%, transparent);
+      background-color: color-mix(in oklab, var(--lesli-color-neutral-50) 70%, transparent);
     }
   }
   .px-6 {
