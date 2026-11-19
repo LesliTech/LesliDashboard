@@ -1,4 +1,4 @@
 module LesliDashboard
-    VERSION = "1.1.4"
-    BUILD = "1794795981"
+    VERSION = "1.1.5"
+    BUILD = "1795132447"
 end
