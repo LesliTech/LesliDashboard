@@ -48,12 +48,3 @@ fr:
       afternoon: "Bon après-midi"
       evening: "Bonsoir"
       morning: "Bonjour"
-  activerecord:
-    attributes:
-      lesli_dashboard/dashboard:
-        name: "Nom"
-        engine: "Module"
-        default: "Par défaut"
-      lesli_dashboard/component:
-        component: "Widget"
-        size: "Largeur (colonnes)"

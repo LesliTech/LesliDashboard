@@ -1,0 +1,11 @@
+---
+en:
+  activerecord:
+    attributes:
+      lesli_dashboard/dashboard:
+        name: "Name"
+        engine: "Engine"
+        default: "Default"
+      lesli_dashboard/component:
+        component: "Widget"
+        size: "Width (columns)"

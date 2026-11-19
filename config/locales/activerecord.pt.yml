@@ -1,0 +1,11 @@
+---
+pt:
+  activerecord:
+    attributes:
+      lesli_dashboard/dashboard:
+        name: "Nome"
+        engine: "Módulo"
+        default: "Padrão"
+      lesli_dashboard/component:
+        component: "Widget"
+        size: "Largura (colunas)"

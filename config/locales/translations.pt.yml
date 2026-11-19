@@ -48,12 +48,3 @@ pt:
       afternoon: "Boa tarde"
       evening: "Boa noite"
       morning: "Bom dia"
-  activerecord:
-    attributes:
-      lesli_dashboard/dashboard:
-        name: "Nome"
-        engine: "Módulo"
-        default: "Padrão"
-      lesli_dashboard/component:
-        component: "Widget"
-        size: "Largura (colunas)"
