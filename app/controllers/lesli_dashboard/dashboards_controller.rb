@@ -48,8 +48,8 @@ module LesliDashboard
 
             @dashboard = @service.result
             @dashboard_engine = @dashboard.engine
-            @dashboards = DashboardService.new(current_user).index(engine: @dashboard.engine).result
-            @components = @dashboard.components.order(:position, :id)
+            @dashboards = DashboardService.new(current_user).index(engine: @dashboard.engine).result.to_a
+            @components = @dashboard.components.order(:position, :id).to_a
             @dashboard_presenter = DashboardPresenter.new(@dashboard)
             respond_with_lesli(json: @dashboard)
         end

@@ -13,7 +13,7 @@ module LesliDashboard
                 def has_privileges_for?(*); allowed; end
                 def full_name; "Editor"; end
                 def roles; []; end
-                def effective_time_zone; Time.find_zone!("UTC"); end
+                def effective_timezone; Time.find_zone!("UTC"); end
             end.new(@core, true)
             user = @user
             @controller.define_singleton_method(:current_user) { user }

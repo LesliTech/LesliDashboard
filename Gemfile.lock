@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lesli_dashboard (1.1.4)
+    lesli_dashboard (1.1.5)
       lesli (~> 5.1.0)
 
 GEM
